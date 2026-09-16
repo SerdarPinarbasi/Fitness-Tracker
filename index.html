@@ -1,158 +1,860 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-<meta name="theme-color" content="#111111"/>
-<link rel="manifest" href="manifest.webmanifest">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>8 Haftalık Blok</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0E141B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Blok">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>8 Haftalık Upper / Lower Tracker</title>
+<link rel="icon" href="icon-192.png">
 <style>
-:root{--bg:#f5f6f8;--card:#fff;--text:#17181a;--muted:#6b7078;--line:#e3e5e8;--accent:#111;--ok:#16834b;--warn:#a35a00}
-*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-header{position:sticky;top:0;z-index:10;background:rgba(245,246,248,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.wrap{max-width:1100px;margin:auto;padding:14px 18px;padding-top:max(14px,env(safe-area-inset-top))}.top{display:flex;gap:12px;align-items:center;justify-content:space-between}
-h1{font-size:20px;margin:0}.sub{color:var(--muted);font-size:13px;margin-top:3px}
-button,.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:600;cursor:pointer}
-button.primary{background:#111;color:#fff;border-color:#111}
-nav{display:flex;gap:7px;overflow:auto;padding-top:12px}.tab{white-space:nowrap}.tab.active{background:#111;color:#fff;border-color:#111}
-main{max-width:1100px;margin:auto;padding:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.metric{font-size:24px;font-weight:750}.label{font-size:12px;color:var(--muted)}
-.section{margin-top:16px}.section h2{font-size:16px;margin:0 0 10px}
-.workout{margin-bottom:14px}.workout h3{font-size:16px;margin:0 0 9px}.badge{font-size:11px;background:#eef0f2;padding:4px 7px;border-radius:999px;color:#555}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}th{color:var(--muted);font-size:11px;text-transform:uppercase}
-input,textarea,select{width:100%;padding:8px;border:1px solid var(--line);border-radius:8px;background:#fff;font:inherit}input[type=number]{min-width:68px}
-.row{display:grid;grid-template-columns:1.5fr .65fr .65fr .8fr .8fr .9fr;gap:6px;align-items:center}.row.header{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}
-.exercise{padding:9px 0;border-bottom:1px solid var(--line)}.exercise:last-child{border:0}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.tiny{font-size:12px;color:var(--muted)}
-textarea{min-height:100px;resize:vertical}.hidden{display:none}
-.checkin{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.toast{position:fixed;right:16px;bottom:16px;background:#111;color:#fff;padding:10px 14px;border-radius:10px;display:none}
-@media(max-width:760px){body{font-size:15px}.grid,.checkin{grid-template-columns:repeat(2,1fr)}.row{grid-template-columns:1fr 65px 65px 75px 75px}.row .rir{display:none}th:nth-child(5),td:nth-child(5){display:none}}
-.today-btn{display:none}
-@media(max-width:760px){.today-btn{display:block;width:100%;margin:10px 0 0;padding:14px;font-size:16px}.top .actions button:first-child{display:none}.row{grid-template-columns:1fr 70px 70px}.row>div:nth-child(4),.row>div:nth-child(5),.row>div:nth-child(6){display:none}.exercise{padding:12px 0}.exercise input{min-height:42px;font-size:16px}.card{padding:13px}}
+:root{
+  --bg:#0E141B;
+  --surface:#17202B;
+  --surface2:#1E2A38;
+  --line:#2A3948;
+  --text:#E9EFF5;
+  --muted:#8DA0B2;
+  --strength:#D2352C;
+  --hyper:#2D6FD1;
+  --signal:#E8B33A;
+  --done:#45A06E;
+  --r:14px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-feature-settings:"tnum" 1,"cv05" 1;
+  font-size:16px;line-height:1.45;
+  padding-bottom:calc(74px + env(safe-area-inset-bottom));
+  overscroll-behavior-y:contain;
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.02em}
+button,input,textarea,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+input,textarea{
+  background:var(--surface2);border:1px solid var(--line);border-radius:10px;
+  color:var(--text);padding:10px 12px;width:100%;
+}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+textarea{resize:vertical;line-height:1.5}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+/* header */
+header.top{
+  padding:calc(14px + env(safe-area-inset-top)) 0 10px;
+  position:sticky;top:0;z-index:20;
+  background:linear-gradient(var(--bg) 78%, rgba(14,20,27,0));
+}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.brand h1{font-size:19px}
+.brand .meta{font-size:13px;color:var(--muted)}
+
+/* week strip */
+.weeks{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;margin:0 -16px;scrollbar-width:none}
+.weeks::-webkit-scrollbar{display:none}
+.wk{
+  flex:0 0 auto;min-width:56px;padding:8px 0;border-radius:12px;
+  background:var(--surface);border:1px solid var(--line);text-align:center;
+}
+.wk b{display:block;font-size:17px;font-weight:800;line-height:1.1}
+.wk span{display:block;font-size:10.5px;color:var(--muted);letter-spacing:.02em}
+.wk.on{background:var(--signal);border-color:var(--signal);color:#16202B}
+.wk.on span{color:#16202B;opacity:.7}
+.wk.full{border-color:var(--done)}
+.wk.full span{color:var(--done)}
+.wk.on.full span{color:#16202B}
+
+/* session rows */
+.rows{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.row{
+  display:flex;align-items:stretch;gap:0;width:100%;text-align:left;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+}
+.bar{width:5px;flex:0 0 5px;background:var(--strength)}
+.bar.h{background:var(--hyper)}
+.row .body{padding:12px 14px;flex:1;min-width:0}
+.row .t{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.row .t b{font-size:16px;font-weight:700}
+.row .t .d{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.row .sub{font-size:13px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row.done{background:var(--surface)}
+.row.done .t b::after{content:"✓";color:var(--done);font-size:13px;margin-left:8px;font-weight:700}
+.row.next{border-color:var(--signal)}
+
+/* hero */
+.hero{
+  border:1px solid var(--line);border-radius:18px;background:var(--surface);
+  padding:16px;margin:2px 0 18px;position:relative;overflow:hidden;
+}
+.hero::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--signal)}
+.hero .kick{font-size:12.5px;color:var(--signal);font-weight:600}
+.hero h2{font-size:26px;margin:4px 0 2px;letter-spacing:-.03em}
+.hero .when{font-size:13.5px;color:var(--muted)}
+.hero .prev{margin:12px 0 14px;font-size:13.5px;color:var(--muted);line-height:1.7}
+.hero .prev i{font-style:normal;color:var(--text)}
+.go{
+  display:block;width:100%;background:var(--signal);color:#16202B;font-weight:800;
+  border-radius:12px;padding:14px;text-align:center;font-size:16px;
+}
+
+/* section */
+.sec{margin:22px 0 10px;font-size:13px;color:var(--muted);font-weight:600}
+
+/* exercise card */
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
+.ex>header{padding:12px 14px 10px;border-bottom:1px solid var(--line)}
+.ex .name{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ex .name b{font-size:16.5px;font-weight:700}
+.ex .name .target{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.ex .last{font-size:12.5px;color:var(--muted);margin-top:4px}
+.ex .last i{font-style:normal;color:#C6D4E0}
+.grid{display:grid;grid-template-columns:26px 1fr 1fr 1fr 30px;gap:8px;align-items:center;padding:0 14px}
+.grid.head{padding-top:10px;padding-bottom:2px;font-size:11.5px;color:var(--muted)}
+.grid.head span:first-child{text-align:center}
+.setrow{padding-top:8px}
+.setrow:last-of-type{padding-bottom:4px}
+.setrow .n{text-align:center;font-size:13px;color:var(--muted)}
+.setrow input{padding:11px 8px;text-align:center;font-size:16px;font-weight:600}
+.setrow input.filled{border-color:#3C536B;background:#223143}
+.del{color:var(--muted);font-size:20px;line-height:1;padding:6px 0}
+.exfoot{display:flex;gap:8px;padding:10px 14px 12px;flex-wrap:wrap}
+.chip{
+  background:var(--surface2);border:1px solid var(--line);border-radius:999px;
+  padding:7px 12px;font-size:13px;color:#C6D4E0;
+}
+.chip.act{border-color:var(--signal);color:var(--signal)}
+.exnote{padding:0 14px 12px}
+.exnote input{font-size:14px;padding:9px 12px}
+
+/* session screen */
+.screen{display:none}
+.screen.on{display:block}
+.sheet{position:fixed;inset:0;background:var(--bg);z-index:40;overflow-y:auto;display:none;padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+.sheet.on{display:block}
+.sheethead{
+  position:sticky;top:0;z-index:5;background:var(--bg);
+  padding:calc(12px + env(safe-area-inset-top)) 16px 12px;border-bottom:1px solid var(--line);
+}
+.sheethead .line1{display:flex;align-items:center;gap:12px}
+.back{font-size:15px;color:var(--signal);font-weight:600;padding:4px 0}
+.sheethead h2{font-size:19px;margin-top:8px}
+.sheethead .dt{display:flex;gap:10px;align-items:center;margin-top:10px}
+.sheethead .dt input{max-width:190px;padding:8px 10px;font-size:14px}
+.tag{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.tag.s{color:var(--strength);border-color:#4A2220}
+.tag.h{color:var(--hyper);border-color:#1E3A5F}
+.finish{
+  position:fixed;left:0;right:0;bottom:0;z-index:45;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(rgba(14,20,27,0),var(--bg) 32%);display:none;
+}
+.finish.on{display:block}
+.finish .inner{max-width:560px;margin:0 auto;display:flex;gap:10px}
+.finish button{flex:1;border-radius:12px;padding:14px;font-weight:800;font-size:15px;background:var(--done);color:#0C1A12}
+.finish button.ghost{flex:0 0 auto;background:var(--surface2);color:var(--text);border:1px solid var(--line);padding:14px 16px;font-weight:600}
+
+/* nav */
+nav.tabs{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  background:rgba(14,20,27,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+nav.tabs .inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
+nav.tabs button{padding:12px 0 14px;font-size:12.5px;color:var(--muted);font-weight:600}
+nav.tabs button.on{color:var(--signal)}
+nav.tabs button b{display:block;font-size:17px;font-weight:700;margin-bottom:2px}
+
+/* measure */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+.delta{font-size:12.5px;margin-top:6px;color:var(--muted)}
+.delta b{color:var(--done);font-weight:700}
+.delta b.up{color:var(--signal)}
+.spark{width:100%;height:96px;display:block;margin:6px 0 2px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;padding:6px 0;border-bottom:1px solid var(--line)}
+.tbl td{padding:8px 0;border-bottom:1px solid var(--line)}
+.tbl td:not(:first-child),.tbl th:not(:first-child){text-align:right}
+
+/* report */
+pre.rep{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;max-height:56vh;overflow:auto;
+}
+.btnrow{display:flex;gap:10px;margin:12px 0}
+.btn{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px;font-weight:700;font-size:14.5px;text-align:center}
+.btn.pri{background:var(--signal);color:#16202B;border-color:var(--signal)}
+.toast{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom));
+  background:#E9EFF5;color:#0E141B;padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:700;
+  z-index:60;opacity:0;pointer-events:none;transition:opacity .18s
+}
+.toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-<div class="top"><div><h1>8 Hafta — Upper / Lower</h1><div class="sub">Hızlı kayıt • otomatik ilerleme • haftalık agent görüşmesi</div></div>
-<div class="actions"><button onclick="exportData()">JSON yedek</button><button class="primary" onclick="copyAgentReport()">Agent raporunu kopyala</button></div></div>
-<button class="today-btn primary" onclick="render('log')">🏋️ Bugünkü Antrenman</button><nav id="tabs"></nav>
-</div></header>
 
-<main>
-<section id="dashboard"></section>
-<section id="program" class="hidden"></section>
-<section id="log" class="hidden"></section>
-<section id="checkins" class="hidden"></section>
-<section id="settings" class="hidden"></section>
-</main>
-<div id="toast" class="toast"></div>
+<div id="app">
+  <!-- ANTRENMAN -->
+  <section class="screen on" id="scr-blok">
+    <header class="top"><div class="wrap">
+      <div class="brand"><h1>8 haftalık blok</h1><span class="meta" id="blokMeta"></span></div>
+    </div>
+    <div class="wrap"><div class="weeks" id="weekStrip"></div></div>
+    </header>
+    <div class="wrap">
+      <div id="heroSlot"></div>
+      <div class="sec" id="weekLabel"></div>
+      <div class="rows" id="sessionRows"></div>
+    </div>
+  </section>
+
+  <!-- ÖLÇÜM -->
+  <section class="screen" id="scr-olcum">
+    <header class="top"><div class="wrap">
+      <div class="brand"><h1>Ölçüm</h1><span class="meta">haftada bir, aynı sabah</span></div>
+    </div></header>
+    <div class="wrap">
+      <div class="card">
+        <div class="two">
+          <div class="field"><label for="mWeight">Kilo (kg)</label><input id="mWeight" inputmode="decimal" placeholder="—"></div>
+          <div class="field"><label for="mWaist">Bel çevresi (cm)</label><input id="mWaist" inputmode="decimal" placeholder="—"></div>
+        </div>
+        <div class="delta" id="mDelta"></div>
+      </div>
+      <div class="card">
+        <div class="field"><label for="mNote">Haftalık değerlendirme</label>
+        <textarea id="mNote" rows="5" placeholder="Uyku, enerji, ağrı, iştah, kaçan antrenman, koça soru..."></textarea></div>
+      </div>
+      <div class="card">
+        <svg class="spark" id="spark" viewBox="0 0 320 96" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <table class="tbl"><thead><tr><th>Hafta</th><th>Kilo</th><th>Bel</th><th>Tonaj</th></tr></thead>
+        <tbody id="mTable"></tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAPOR -->
+  <section class="screen" id="scr-rapor">
+    <header class="top"><div class="wrap">
+      <div class="brand"><h1>Koç raporu</h1><span class="meta" id="repMeta"></span></div>
+    </div></header>
+    <div class="wrap">
+      <div class="btnrow">
+        <button class="btn pri" id="btnCopy">Raporu kopyala</button>
+        <button class="btn" id="btnScope">Tüm blok</button>
+      </div>
+      <pre class="rep" id="repOut"></pre>
+      <div class="btnrow">
+        <button class="btn" id="btnExport">JSON yedek al</button>
+        <button class="btn" id="btnImport">Yedek yükle</button>
+      </div>
+      <p class="small muted">Veriler yalnızca bu telefonun tarayıcısında (localStorage) tutulur. Telefon değiştirince JSON yedeğiyle taşı.</p>
+      <input type="file" id="fileIn" accept="application/json" style="display:none">
+    </div>
+  </section>
+</div>
+
+<!-- SEANS EKRANI -->
+<div class="sheet" id="sheet">
+  <div class="sheethead">
+    <div class="line1"><button class="back" id="btnBack">‹ Blok</button><span class="tag" id="shTag"></span></div>
+    <h2 id="shTitle"></h2>
+    <div class="dt">
+      <input type="date" id="shDate">
+      <span class="small muted" id="shStat"></span>
+    </div>
+  </div>
+  <div class="wrap" style="padding-top:14px" id="exList"></div>
+  <div class="wrap">
+    <div class="card"><div class="field"><label for="shNote">Seans notu</label>
+      <textarea id="shNote" rows="3" placeholder="Nasıl geçti? Ağrı, teknik, süre..."></textarea></div></div>
+  </div>
+</div>
+<div class="finish" id="finishBar"><div class="inner">
+  <button id="btnFinish">Antrenmanı tamamla</button>
+  <button class="ghost" id="btnCopyPrev">Geçen sefer</button>
+</div></div>
+
+<nav class="tabs"><div class="inner">
+  <button class="on" data-tab="blok"><b>◧</b>Antrenman</button>
+  <button data-tab="olcum"><b>◔</b>Ölçüm</button>
+  <button data-tab="rapor"><b>◈</b>Rapor</button>
+</div></nav>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const KEY="ul8_tracker_v1";
-const defaultProgram=[
- {name:"Gün 1 — Upper / Güç", exercises:[
-  ["Bench Press",4,5],["Overhead Press",4,6],["Pull-up",4,8],["Barbell Row",4,8],["Lateral Raise",4,15]
- ]},
- {name:"Gün 2 — Lower / Güç", exercises:[
-  ["Squat",4,5],["Romanian Deadlift",4,8],["Leg Press",3,10],["Leg Curl",3,10],["Calf Raise",4,12]
- ]},
- {name:"Gün 3 — Upper / Hipertrofi", exercises:[
-  ["Incline Dumbbell Press",3,10],["Chest-Supported Row",4,10],["Lat Pulldown",4,10],["Cable Lateral Raise",4,15],["Dumbbell Curl",3,12],["Triceps Pushdown",3,12]
- ]},
- {name:"Gün 4 — Lower / Hipertrofi", exercises:[
-  ["Trap Bar Deadlift / Deadlift",3,5],["Reverse Lunge",3,10],["Leg Extension",3,12],["Leg Curl",3,12],["Hanging Leg Raise",3,15],["Plank",3,1]
- ]}
+"use strict";
+
+/* ---------- PROGRAM ---------- */
+const PROGRAM = [
+  {d:1, title:"Üst", focus:"Güç", ex:[
+    {k:"bench",   n:"Bench Press",        s:4, r:"5",     u:"kg"},
+    {k:"ohp",     n:"Overhead Press",     s:4, r:"6",     u:"kg"},
+    {k:"pullup",  n:"Pull-up",            s:4, r:"6–8",   u:"kg"},
+    {k:"row",     n:"Barbell Row",        s:4, r:"6–8",   u:"kg"},
+    {k:"lateral", n:"Lateral Raise",      s:4, r:"12–15", u:"kg"}
+  ]},
+  {d:2, title:"Alt", focus:"Güç", ex:[
+    {k:"squat",   n:"Squat",              s:4, r:"5",     u:"kg"},
+    {k:"rdl",     n:"Romanian Deadlift",  s:4, r:"6–8",   u:"kg"},
+    {k:"legpress",n:"Leg Press",          s:3, r:"10",    u:"kg"},
+    {k:"legcurl", n:"Leg Curl",           s:3, r:"10",    u:"kg"},
+    {k:"calf",    n:"Calf Raise",         s:4, r:"12",    u:"kg"}
+  ]},
+  {d:3, title:"Üst", focus:"Hipertrofi", ex:[
+    {k:"incdb",   n:"Incline Dumbbell Press", s:3, r:"10", u:"kg"},
+    {k:"csrow",   n:"Chest-Supported Row",    s:4, r:"10", u:"kg"},
+    {k:"latpull", n:"Lat Pulldown",           s:4, r:"10", u:"kg"},
+    {k:"cablelat",n:"Cable Lateral Raise",    s:4, r:"15", u:"kg"},
+    {k:"curl",    n:"Dumbbell Curl",          s:3, r:"12", u:"kg"},
+    {k:"pushdown",n:"Triceps Pushdown",       s:3, r:"12", u:"kg"}
+  ]},
+  {d:4, title:"Alt", focus:"Hipertrofi", ex:[
+    {k:"deadlift",n:"Trap Bar / hafif Deadlift", s:3, r:"5",     u:"kg"},
+    {k:"lunge",   n:"Reverse Lunge",            s:3, r:"10",    u:"kg"},
+    {k:"legext",  n:"Leg Extension",            s:3, r:"12–15", u:"kg"},
+    {k:"legcurl", n:"Leg Curl",                 s:3, r:"12–15", u:"kg"},
+    {k:"hlr",     n:"Hanging Leg Raise",        s:3, r:"15",    u:"bw"},
+    {k:"plank",   n:"Plank",                    s:3, r:"sn",    u:"sn"}
+  ]}
 ];
-let state=JSON.parse(localStorage.getItem(KEY)||"null")||{program:defaultProgram,logs:{},checkins:{},week:1};
-function save(){localStorage.setItem(KEY,JSON.stringify(state));toast("Kaydedildi ✓")}
-function toast(t){let x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",1400)}
-function allExercises(){return state.program.flatMap((d,di)=>d.exercises.map((e,ei)=>({di,ei,name:e[0],sets:e[1],reps:e[2]})))}
-function logKey(w,di,ei){return `${w}-${di}-${ei}`}
-function getLog(w,di,ei){return state.logs[logKey(w,di,ei)]||{weight:"",reps:"",sets:"",rir:"",note:""}}
-function setLog(w,di,ei,k,v){let l=getLog(w,di,ei);l[k]=v;state.logs[logKey(w,di,ei)]=l;save()}
-function nav(){
- const items=[["dashboard","Özet"],["program","Program"],["log","Antrenman Kaydı"],["checkins","Haftalık Görüşme"],["settings","Ayarlar"]];
- document.getElementById("tabs").innerHTML=items.map(x=>`<button class="tab ${x[0]=="dashboard"?"active":""}" onclick="show('${x[0]}',this)">${x[1]}</button>`).join("");
+const DAY_OFFSET = [0,2,4,6];          // Pzt, Çar, Cum, Paz
+const START = "2026-09-07";
+const WEEKS = 8;
+const KEY = "blok8w.v1";
+
+/* ---------- İLK 5 ANTRENMAN ---------- */
+const SEED = {
+  "1-1":{date:"2026-09-07",done:true,ex:{
+    bench:"50x5|50x5|50x5|50x5",
+    ohp:"30x8|30x8|30x8|30x8",
+    pullup:{alt:"Lat Pulldown", sets:"45x6|45x6|45x6|45x6"},
+    row:"30x8|30x8|30x8|30x8",
+    lateral:"7.5x10|7.5x10|7.5x10|7.5x10"}},
+  "1-2":{date:"2026-09-09",done:true,ex:{
+    squat:{alt:"Smith Machine Squat", sets:"65x5|65x5|65x5|65x5"},
+    rdl:"45x8|45x8|45x8|45x8",
+    legpress:"80x10|80x10|80x10",
+    legcurl:{note:"lying", sets:"40x10|40x10|40x10"},
+    calf:"60x12|60x12|60x12|60x12"}},
+  "1-3":{date:"2026-09-11",done:true,ex:{
+    incdb:{note:"her el 15 kg", sets:"15x10|15x10|15x10"},
+    csrow:{note:"her el 15 kg", sets:"15x10|15x10|15x10|15x10"},
+    latpull:"50x10|50x10|50x10|50x10",
+    cablelat:"10x10|10x10|10x10|10x10",
+    curl:{note:"her kol 7.5 kg", sets:"7.5x12|7.5x12|7.5x12"},
+    pushdown:"25x12|25x12|25x12"}},
+  "1-4":{date:"2026-09-13",done:true,ex:{
+    deadlift:{alt:"Deadlift", sets:"60x5|60x5|60x5"},
+    lunge:"15x10|15x10|15x10",
+    legext:"30x12|30x12|30x12",
+    legcurl:{note:"lying", sets:"45x12|45x12|45x12"},
+    hlr:{alt:"Leg Raise", sets:"x12|x12|x12"},
+    plank:{note:"saniye", sets:"x45|x45|x45"}}},
+  "2-1":{date:"2026-09-15",done:true,ex:{
+    bench:"60x4|60x4|60x4|60x4",
+    ohp:"30x10|30x10|30x10|30x10",
+    pullup:{alt:"Lat Pulldown", sets:"45x6|45x6|45x6|45x6"},
+    row:"30x10|30x10|30x10|30x10",
+    lateral:"7.5x10|7.5x10|7.5x10|7.5x10"}},
+  "2-2":{date:"2026-09-17",done:false,ex:{}}
+};
+
+/* ---------- STATE ---------- */
+let S = null, tab="blok", curWeek=1, curKey=null, scopeAll=false;
+
+function blankSession(w,d){
+  return {date:plannedDate(w,d), done:false, note:"", ex:{}};
 }
-function show(id,el){
- document.querySelectorAll("main>section").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");
- document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));el?.classList.add("active");
- render(id);
+function blankEx(def){
+  return {alt:"", note:"", sets:Array.from({length:def.s},()=>({kg:"",reps:"",rir:""}))};
 }
-function render(id){
- if(id==="dashboard")dashboard(); if(id==="program")program(); if(id==="log")log(); if(id==="checkins")checkins(); if(id==="settings")settings();
+function parseSets(str){
+  return str.split("|").map(p=>{
+    const [kg,reps] = p.split("x");
+    return {kg:(kg||"").trim(), reps:(reps||"").trim(), rir:""};
+  });
 }
-function dashboard(){
- let completed=0,total=0;
- allExercises().forEach(x=>{let l=getLog(state.week,x.di,x.ei);total++;if(l.weight||l.reps||l.note)completed++});
- let ci=state.checkins[state.week]||{};
- document.getElementById("dashboard").innerHTML=`
- <div class="grid">
-  <div class="card"><div class="label">Aktif hafta</div><div class="metric">${state.week}/8</div></div>
-  <div class="card"><div class="label">Hareket kaydı</div><div class="metric">${completed}/${total}</div></div>
-  <div class="card"><div class="label">Kilo</div><div class="metric">${ci.weight||"—"} <small>kg</small></div></div>
-  <div class="card"><div class="label">Bel</div><div class="metric">${ci.waist||"—"} <small>cm</small></div></div>
- </div>
- <div class="section card"><h2>Bu hafta</h2>
- <div class="tiny">Haftayı seçmek için üstteki kontrolü kullan. Her hareket için kilo + gerçek tekrarları gir. RIR varsa özellikle yaz; ilerleme kararını kolaylaştırır.</div>
- <div class="actions"><select id="weekSelect" onchange="changeWeek(this.value)">${[1,2,3,4,5,6,7,8].map(w=>`<option ${w==state.week?"selected":""}>${w}</option>`).join("")}</select>
- <button class="primary" onclick="show('log',document.querySelectorAll('.tab')[2])">Bugünkü kaydı aç</button>
- <button onclick="copyAgentReport()">Bu haftayı agent'a gönder</button></div></div>
- <div class="section card"><h2>Koç notu</h2><p class="tiny">Hedef: yağ kaybederken kası korumak/geliştirmek. Ana hareketlerde performans, yardımcı hareketlerde tekrar/teknik ve RIR takip ediliyor. Ağrı varsa not alanına yaz ve hareketi zorlamama kuralını kullan.</p></div>`;
+function freshState(){
+  const st = {v:1, start:START, sessions:{}, weeks:{}};
+  for(let w=1;w<=WEEKS;w++){
+    st.weeks[w] = {weight:"", waist:"", note:""};
+    for(let d=1;d<=4;d++) st.sessions[w+"-"+d] = blankSession(w,d);
+  }
+  for(const key in SEED){
+    const seed = SEED[key], sess = st.sessions[key], day = PROGRAM[+key.split("-")[1]-1];
+    sess.date = seed.date; sess.done = seed.done;
+    for(const def of day.ex){
+      const raw = seed.ex[def.k];
+      if(!raw) continue;
+      const e = blankEx(def);
+      if(typeof raw === "string"){ e.sets = parseSets(raw); }
+      else { e.sets = parseSets(raw.sets); e.alt = raw.alt||""; e.note = raw.note||""; }
+      sess.ex[def.k] = e;
+    }
+  }
+  return st;
 }
-function changeWeek(v){state.week=+v;save();render("dashboard")}
-function program(){
- document.getElementById("program").innerHTML=`<div class="card"><h2>Program</h2><p class="tiny">Bu başlangıç programı düzenlenebilir. Set/tekrar hedefleri burada tutulur; gerçekleşen değerleri Antrenman Kaydı'ndan gir.</p>
- ${state.program.map((d,di)=>`<div class="workout section"><h3>${d.name}</h3><table><thead><tr><th>Hareket</th><th>Set</th><th>Tekrar</th></tr></thead><tbody>${d.exercises.map((e,ei)=>`<tr><td><input value="${esc(e[0])}" onchange="editProg(${di},${ei},0,this.value)"></td><td><input type="number" value="${e[1]}" onchange="editProg(${di},${ei},1,this.value)"></td><td><input type="number" value="${e[2]}" onchange="editProg(${di},${ei},2,this.value)"></td></tr>`).join("")}</tbody></table></div>`).join("")}</div>`;
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){ S = JSON.parse(raw);
+      for(let w=1;w<=WEEKS;w++){
+        if(!S.weeks[w]) S.weeks[w]={weight:"",waist:"",note:""};
+        for(let d=1;d<=4;d++) if(!S.sessions[w+"-"+d]) S.sessions[w+"-"+d]=blankSession(w,d);
+      }
+      return;
+    }
+  }catch(e){}
+  S = freshState(); save();
 }
-function editProg(di,ei,k,v){state.program[di].exercises[ei][k]=k?+v:v;save()}
-function log(){
- document.getElementById("log").innerHTML=`<div class="card"><div class="top"><div><h2 style="margin:0">Hafta ${state.week} kayıtları</h2><div class="tiny">Hedef set/tekrar → gerçekleşen kilo/tekrar. “RIR” = sette kaç tekrar daha çıkarabilirdin.</div></div><select onchange="changeWeekLog(this.value)">${[1,2,3,4,5,6,7,8].map(w=>`<option ${w==state.week?"selected":""}>${w}</option>`).join("")}</select></div>
- ${state.program.map((d,di)=>`<div class="workout section"><h3>${d.name}</h3><div class="row header"><div>Hareket</div><div>Hedef</div><div>Kilo</div><div>Gerçek tekrar</div><div>RIR</div><div>Not</div></div>
- ${d.exercises.map((e,ei)=>{let l=getLog(state.week,di,ei);return `<div class="exercise"><div class="row"><div><b>${esc(e[0])}</b><div class="tiny">${e[1]}×${e[2]} hedef</div></div>
- <div class="tiny">${e[1]}×${e[2]}</div><div><input type="number" step="0.5" value="${l.weight}" placeholder="kg" onchange="setLog(${state.week},${di},${ei},'weight',this.value)"></div>
- <div><input type="text" value="${esc(l.reps)}" placeholder="5,5,5,5" onchange="setLog(${state.week},${di},${ei},'reps',this.value)"></div>
- <div class="rir"><input type="number" min="0" max="5" value="${l.rir}" placeholder="1-2" onchange="setLog(${state.week},${di},${ei},'rir',this.value)"></div>
- <div><input value="${esc(l.note)}" placeholder="kolay / zor / ağrı..." onchange="setLog(${state.week},${di},${ei},'note',this.value)"></div></div></div>`}).join("")}</div>`).join("")}
- <div class="actions"><button class="primary" onclick="copyAgentReport()">Hafta ${state.week} raporunu kopyala</button><button onclick="nextWeek()">Sonraki haftaya geç →</button></div></div>`;
+let saveT=null;
+function save(){
+  clearTimeout(saveT);
+  saveT = setTimeout(()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){ toast("Kaydedilemedi: depolama dolu"); } },250);
 }
-function changeWeekLog(v){state.week=+v;save();log()}
-function nextWeek(){if(state.week<8){state.week++;save();log()}else toast("8. hafta tamamlandı")}
-function checkins(){
- document.getElementById("checkins").innerHTML=`<div class="card"><h2>Haftalık ilerleme görüşmesi</h2><p class="tiny">Pazar günü 2 dakikada doldur. Bunlar agent'ın karar vermesi için özet veridir.</p>
- <select onchange="changeCIWeek(this.value)" id="ciweek">${[1,2,3,4,5,6,7,8].map(w=>`<option ${w==state.week?"selected":""}>${w}</option>`).join("")}</select>
- <div class="checkin section">${ciInput("Kilo (kg)","weight")}${ciInput("Bel (cm)","waist")}${ciInput("Uyku / enerji (1-10)","energy")}</div>
- <div class="section"><label class="tiny">Bu hafta en iyi giden şey</label><textarea id="good"></textarea></div>
- <div class="section"><label class="tiny">En çok zorlayan şey / açlık / kaçamak / ağrı</label><textarea id="bad"></textarea></div>
- <div class="section"><label class="tiny">Koçtan bu hafta istediğim karar</label><textarea id="ask"></textarea></div>
- <div class="actions"><button class="primary" onclick="saveCI()">Check-in kaydet</button><button onclick="copyAgentReport()">Agent görüşmesi metnini kopyala</button></div></div>`;
- loadCI();
+
+/* ---------- YARDIMCI ---------- */
+const TR_MONTH = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const TR_DAY = ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
+function iso(dt){ return dt.toISOString().slice(0,10); }
+function plannedDate(w,d){
+  const base = new Date(START+"T12:00:00");
+  base.setDate(base.getDate() + (w-1)*7 + DAY_OFFSET[d-1]);
+  return iso(base);
 }
-function ciInput(label,key){return `<div><label class="tiny">${label}</label><input id="ci_${key}" type="number" step="0.1"></div>`}
-function changeCIWeek(v){state.week=+v;save();checkins()}
-function loadCI(){let c=state.checkins[state.week]||{};["weight","waist","energy","good","bad","ask"].forEach(k=>{let e=document.getElementById(k==="good"?"good":k==="bad"?"bad":k==="ask"?"ask":"ci_"+k);if(e)e.value=c[k]||""})}
-function saveCI(){state.checkins[state.week]={weight:val("ci_weight"),waist:val("ci_waist"),energy:val("ci_energy"),good:val("good"),bad:val("bad"),ask:val("ask")};save()}
-function val(id){return document.getElementById(id)?.value||""}
-function settings(){
- document.getElementById("settings").innerHTML=`<div class="card"><h2>Ayarlar / veri</h2><p class="tiny">Veriler yalnızca bu tarayıcıda localStorage'da tutulur. Cihaz değiştirirsen JSON yedeğini alıp içe aktar.</p>
- <div class="actions"><button onclick="exportData()">JSON dışa aktar</button><label class="btn">JSON içe aktar <input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(this.files[0])"></label><button onclick="resetAll()">Tüm veriyi sıfırla</button></div></div>`;
+function fmt(dstr,long){
+  if(!dstr) return "—";
+  const dt = new Date(dstr+"T12:00:00");
+  return dt.getDate()+" "+TR_MONTH[dt.getMonth()]+(long?" "+TR_DAY[dt.getDay()]:"");
 }
-function report(){
- let w=state.week, c=state.checkins[w]||{};
- let lines=[`8 HAFTALIK UPPER/LOWER — HAFTA ${w}/8`,`Vücut: kilo=${c.weight||"?"} kg, bel=${c.waist||"?"} cm, enerji/uyku=${c.energy||"?"}/10`,`İyi giden: ${c.good||"-"}`,`Zorlayan: ${c.bad||"-"}`,`Koçtan istediğim karar: ${c.ask||"-"}`,``,`ANTRENMAN KAYITLARI:`];
- state.program.forEach((d,di)=>{lines.push(`\n${d.name}`);d.exercises.forEach((e,ei)=>{let l=getLog(w,di,ei);lines.push(`- ${e[0]} | hedef ${e[1]}x${e[2]} | kilo ${l.weight||"?"} kg | gerçekleşen tekrar ${l.reps||"?"} | RIR ${l.rir||"?"} | not: ${l.note||"-"}`)})});
- lines.push(`\nAGENT GÖREVİ: Bu haftayı önceki haftalarla karşılaştır. Performans trendini, hacmi, RIR'ı, kilo/bel değişimini ve ağrı/uyum notlarını değerlendir. Sonraki hafta için yalnızca gerekli değişiklikleri öner; gereksiz program değişikliği yapma. Yağ kaybı + kas korunması/gelişmesi hedefini gözet.`);
- return lines.join("\n");
+function num(x){ const v = parseFloat(String(x).replace(",",".")); return isFinite(v)?v:0; }
+function hasData(sess){
+  return Object.values(sess.ex||{}).some(e=>e.sets.some(s=>s.kg!=="" || s.reps!==""));
 }
-function copyAgentReport(){navigator.clipboard.writeText(report()).then(()=>toast("Agent raporu panoya kopyalandı ✓")).catch(()=>prompt("Kopyalanacak rapor:",report()))}
-function exportData(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(state,null,2)],{type:"application/json"}));a.download="upper-lower-8-week-backup.json";a.click()}
-function importData(file){if(!file)return;let r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();location.reload()}catch(e){alert("Geçersiz JSON")}};r.readAsText(file)}
-function resetAll(){if(confirm("Tüm program ve kayıtlar silinsin mi?")){localStorage.removeItem(KEY);location.reload()}}
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-nav();render("dashboard");
-if ('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+function tonnage(sess){
+  let t=0;
+  for(const k in sess.ex) for(const s of sess.ex[k].sets){
+    const kg=num(s.kg), r=num(s.reps);
+    if(kg>0 && r>0) t += kg*r;
+  }
+  return Math.round(t);
+}
+function weekTonnage(w){
+  let t=0; for(let d=1;d<=4;d++) t += tonnage(S.sessions[w+"-"+d]); return t;
+}
+function e1rm(kg,reps){ return (kg>0&&reps>0)? Math.round(kg*(1+reps/30)) : 0; }
+function defOf(d,k){ return PROGRAM[d-1].ex.find(e=>e.k===k); }
+function exName(def,e){ return (e&&e.alt)? e.alt : def.n; }
+function setStr(s){
+  if(s.kg==="" && s.reps==="") return null;
+  const kg = s.kg===""? "" : s.kg+"×";
+  return kg + (s.reps||"?") + (s.rir!==""? " @"+s.rir : "");
+}
+function lastPerf(k, beforeW, beforeD){
+  for(let w=beforeW; w>=1; w--){
+    for(let d=4; d>=1; d--){
+      if(w===beforeW && d>=beforeD) continue;
+      const sess = S.sessions[w+"-"+d], e = sess.ex[k];
+      if(e && e.sets.some(s=>s.kg!==""||s.reps!=="")){
+        return {w,d,e,date:sess.date};
+      }
+    }
+  }
+  return null;
+}
+function nextSession(){
+  for(let w=1;w<=WEEKS;w++) for(let d=1;d<=4;d++){
+    const s = S.sessions[w+"-"+d];
+    if(!s.done) return {w,d,s};
+  }
+  return null;
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("on");
+  setTimeout(()=>t.classList.remove("on"), 1700);
+}
+
+/* ---------- BLOK EKRANI ---------- */
+function renderBlok(){
+  const nx = nextSession();
+  document.getElementById("blokMeta").textContent =
+    Object.keys(S.sessions).filter(k=>S.sessions[k].done).length + "/32 antrenman";
+
+  // hafta şeridi
+  const strip = document.getElementById("weekStrip");
+  strip.innerHTML = "";
+  for(let w=1; w<=WEEKS; w++){
+    const done = [1,2,3,4].filter(d=>S.sessions[w+"-"+d].done).length;
+    const b = document.createElement("button");
+    b.className = "wk" + (w===curWeek?" on":"") + (done===4?" full":"");
+    b.innerHTML = "<b>"+w+"</b><span>"+done+"/4</span>";
+    b.onclick = ()=>{ curWeek=w; renderBlok(); };
+    strip.appendChild(b);
+  }
+
+  // hero
+  const hero = document.getElementById("heroSlot");
+  if(nx){
+    const day = PROGRAM[nx.d-1];
+    const lines = day.ex.slice(0,4).map(def=>{
+      const lp = lastPerf(def.k, nx.w, nx.d);
+      const best = lp ? lp.e.sets.map(setStr).filter(Boolean).slice(-1)[0] : null;
+      return def.n + " — <i>" + (best ? best : "kayıt yok") + "</i>";
+    }).join("<br>");
+    hero.innerHTML =
+      '<div class="hero"><div class="kick">Sıradaki · Hafta '+nx.w+'</div>'+
+      '<h2>Gün '+nx.d+' — '+day.title+'</h2>'+
+      '<div class="when">'+day.focus+' · '+fmt(nx.s.date,true)+'</div>'+
+      '<div class="prev">Geçen sefer:<br>'+lines+'</div>'+
+      '<button class="go">Antrenmanı aç</button></div>';
+    hero.querySelector(".go").onclick = ()=>openSession(nx.w, nx.d);
+  } else {
+    hero.innerHTML = '<div class="hero"><div class="kick">Blok tamam</div><h2>8 hafta bitti</h2>'+
+      '<div class="when">Raporu al, yeni blok için koçla konuş.</div></div>';
+  }
+
+  document.getElementById("weekLabel").textContent =
+    "Hafta "+curWeek+" · "+fmt(S.sessions[curWeek+"-1"].date)+" – "+fmt(S.sessions[curWeek+"-4"].date)+" · "+weekTonnage(curWeek).toLocaleString("tr-TR")+" kg tonaj";
+
+  const rows = document.getElementById("sessionRows");
+  rows.innerHTML = "";
+  for(let d=1; d<=4; d++){
+    const sess = S.sessions[curWeek+"-"+d], day = PROGRAM[d-1];
+    const isNext = nx && nx.w===curWeek && nx.d===d;
+    const btn = document.createElement("button");
+    btn.className = "row" + (sess.done?" done":"") + (isNext?" next":"");
+    const sub = sess.done ? (tonnage(sess).toLocaleString("tr-TR")+" kg · "+day.ex.length+" hareket")
+              : (hasData(sess) ? "yarım kaldı" : day.ex.map(e=>e.n).slice(0,3).join(", "));
+    btn.innerHTML = '<span class="bar'+(day.focus==="Hipertrofi"?" h":"")+'"></span>'+
+      '<span class="body"><span class="t"><b>Gün '+d+' — '+day.title+' ('+day.focus+')</b>'+
+      '<span class="d">'+fmt(sess.date)+'</span></span>'+
+      '<span class="sub">'+sub+'</span></span>';
+    btn.onclick = ()=>openSession(curWeek,d);
+    rows.appendChild(btn);
+  }
+}
+
+/* ---------- SEANS ---------- */
+function openSession(w,d){
+  curKey = w+"-"+d;
+  const sess = S.sessions[curKey], day = PROGRAM[d-1];
+  document.getElementById("shTitle").textContent = "Gün "+d+" — "+day.title;
+  const tg = document.getElementById("shTag");
+  tg.textContent = "Hafta "+w+" · "+day.focus;
+  tg.className = "tag " + (day.focus==="Güç"?"s":"h");
+  const dateIn = document.getElementById("shDate");
+  dateIn.value = sess.date;
+  dateIn.oninput = ()=>{ sess.date = dateIn.value; save(); };
+  const note = document.getElementById("shNote");
+  note.value = sess.note||"";
+  note.oninput = ()=>{ sess.note = note.value; save(); };
+  renderExercises();
+  document.getElementById("btnFinish").textContent = sess.done ? "Tamamlandı ✓ (geri al)" : "Antrenmanı tamamla";
+  document.getElementById("sheet").classList.add("on");
+  document.getElementById("finishBar").classList.add("on");
+  window.scrollTo(0,0);
+  document.getElementById("sheet").scrollTop = 0;
+}
+function closeSession(){
+  document.getElementById("sheet").classList.remove("on");
+  document.getElementById("finishBar").classList.remove("on");
+  curKey = null; renderBlok(); renderOlcum(); renderRapor();
+}
+function renderExercises(){
+  const [w,d] = curKey.split("-").map(Number);
+  const sess = S.sessions[curKey], day = PROGRAM[d-1];
+  const wrap = document.getElementById("exList");
+  wrap.innerHTML = "";
+  document.getElementById("shStat").textContent = tonnage(sess).toLocaleString("tr-TR")+" kg tonaj";
+
+  day.ex.forEach(def=>{
+    if(!sess.ex[def.k]) sess.ex[def.k] = blankEx(def);
+    const e = sess.ex[def.k];
+    const lp = lastPerf(def.k, w, d);
+    const lastTxt = lp
+      ? fmt(lp.date)+": "+lp.e.sets.map(setStr).filter(Boolean).join(" · ")
+      : "ilk kez";
+
+    const card = document.createElement("div");
+    card.className = "ex";
+    const unitLbl = def.u==="sn" ? "saniye" : (def.u==="bw" ? "ek kg" : "kg");
+    card.innerHTML =
+      '<header><div class="name"><b>'+exName(def,e)+'</b><span class="target">hedef '+def.s+'×'+def.r+'</span></div>'+
+      '<div class="last">Geçen: <i>'+lastTxt+'</i></div></header>'+
+      '<div class="grid head"><span>#</span><span>'+unitLbl+'</span><span>'+(def.u==="sn"?"saniye":"tekrar")+'</span><span>RIR</span><span></span></div>'+
+      '<div class="sets"></div>'+
+      '<div class="exfoot"><button class="chip" data-a="add">+ set</button>'+
+      '<button class="chip" data-a="prev">geçen seferi doldur</button>'+
+      '<button class="chip'+((e.alt||e.note)?" act":"")+'" data-a="alt">hareket / not</button></div>'+
+      '<div class="exnote" style="display:'+((e.alt||e.note)?"block":"none")+'">'+
+      '<input data-f="alt" placeholder="Farklı hareket yaptıysan adı" value="'+esc(e.alt)+'">'+
+      '<div style="height:8px"></div>'+
+      '<input data-f="note" placeholder="Not (ör. her el 15 kg, makine no)" value="'+esc(e.note)+'"></div>';
+
+    const setsBox = card.querySelector(".sets");
+    const drawSets = ()=>{
+      setsBox.innerHTML = "";
+      e.sets.forEach((s,i)=>{
+        const row = document.createElement("div");
+        row.className = "grid setrow";
+        row.innerHTML = '<span class="n">'+(i+1)+'</span>'+
+          '<input inputmode="decimal" data-i="'+i+'" data-f="kg"   value="'+esc(s.kg)+'" placeholder="–" aria-label="Set '+(i+1)+' ağırlık">'+
+          '<input inputmode="numeric" data-i="'+i+'" data-f="reps" value="'+esc(s.reps)+'" placeholder="–" aria-label="Set '+(i+1)+' tekrar">'+
+          '<input inputmode="numeric" data-i="'+i+'" data-f="rir"  value="'+esc(s.rir)+'" placeholder="–" aria-label="Set '+(i+1)+' RIR">'+
+          '<button class="del" data-i="'+i+'" aria-label="Seti sil">×</button>';
+        row.querySelectorAll("input").forEach(inp=>{
+          if(inp.value!=="") inp.classList.add("filled");
+          inp.oninput = ()=>{
+            e.sets[inp.dataset.i][inp.dataset.f] = inp.value.replace(",",".");
+            inp.classList.toggle("filled", inp.value!=="");
+            save();
+            document.getElementById("shStat").textContent = tonnage(sess).toLocaleString("tr-TR")+" kg tonaj";
+          };
+        });
+        row.querySelector(".del").onclick = ()=>{
+          if(e.sets.length<=1) return;
+          e.sets.splice(i,1); save(); drawSets();
+        };
+        setsBox.appendChild(row);
+      });
+    };
+    drawSets();
+
+    card.querySelectorAll(".exfoot .chip").forEach(b=>{
+      b.onclick = ()=>{
+        const a = b.dataset.a;
+        if(a==="add"){ e.sets.push({kg:"",reps:"",rir:""}); save(); drawSets(); }
+        if(a==="prev"){
+          if(!lp){ toast("Önceki kayıt yok"); return; }
+          e.sets = lp.e.sets.map(s=>({kg:s.kg, reps:s.reps, rir:""}));
+          save(); drawSets(); toast("Geçen seferki yüklendi");
+        }
+        if(a==="alt"){
+          const box = card.querySelector(".exnote");
+          box.style.display = box.style.display==="none" ? "block" : "none";
+        }
+      };
+    });
+    card.querySelectorAll('.exnote input').forEach(inp=>{
+      inp.oninput = ()=>{
+        e[inp.dataset.f] = inp.value; save();
+        card.querySelector(".name b").textContent = exName(def,e);
+      };
+    });
+    wrap.appendChild(card);
+  });
+}
+function esc(v){ return String(v==null?"":v).replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+
+/* ---------- ÖLÇÜM ---------- */
+function renderOlcum(){
+  const wk = S.weeks[curWeek];
+  const wI = document.getElementById("mWeight"), waI = document.getElementById("mWaist"), nI = document.getElementById("mNote");
+  wI.value = wk.weight; waI.value = wk.waist; nI.value = wk.note;
+  wI.oninput = ()=>{ wk.weight = wI.value.replace(",","."); save(); renderDelta(); };
+  waI.oninput = ()=>{ wk.waist = waI.value.replace(",","."); save(); renderDelta(); };
+  nI.oninput  = ()=>{ wk.note  = nI.value; save(); };
+  renderDelta(); renderSpark(); renderTable();
+}
+function renderDelta(){
+  const el = document.getElementById("mDelta");
+  const prev = S.weeks[curWeek-1];
+  const cur = S.weeks[curWeek];
+  let parts = ["Hafta "+curWeek+" ölçümü"];
+  if(prev && prev.weight && cur.weight){
+    const dv = (num(cur.weight)-num(prev.weight)).toFixed(1);
+    parts.push("kilo <b class='"+(dv>0?"up":"")+"'>"+(dv>0?"+":"")+dv+" kg</b>");
+  }
+  if(prev && prev.waist && cur.waist){
+    const dv = (num(cur.waist)-num(prev.waist)).toFixed(1);
+    parts.push("bel <b class='"+(dv>0?"up":"")+"'>"+(dv>0?"+":"")+dv+" cm</b>");
+  }
+  el.innerHTML = parts.join(" · ") + (parts.length===1 ? " — önceki haftayla karşılaştırmak için iki hafta veri gerek." : "");
+}
+function renderSpark(){
+  const svg = document.getElementById("spark");
+  const pts = [];
+  for(let w=1;w<=WEEKS;w++) if(S.weeks[w].weight) pts.push({w, v:num(S.weeks[w].weight)});
+  if(pts.length<2){ svg.innerHTML = '<text x="8" y="52" fill="#8DA0B2" font-size="12">Kilo grafiği için en az 2 hafta verisi gerekiyor.</text>'; return; }
+  const min = Math.min(...pts.map(p=>p.v))-0.6, max = Math.max(...pts.map(p=>p.v))+0.6;
+  const X = w => 10 + (w-1)*(300/(WEEKS-1));
+  const Y = v => 82 - ((v-min)/(max-min||1))*66;
+  let path = pts.map((p,i)=>(i?"L":"M")+X(p.w).toFixed(1)+" "+Y(p.v).toFixed(1)).join(" ");
+  let dots = pts.map(p=>'<circle cx="'+X(p.w).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="3" fill="#E8B33A"/>').join("");
+  svg.innerHTML = '<path d="'+path+'" fill="none" stroke="#E8B33A" stroke-width="2" stroke-linejoin="round"/>'+dots+
+    '<text x="10" y="13" fill="#8DA0B2" font-size="11">'+max.toFixed(1)+' kg</text>'+
+    '<text x="10" y="94" fill="#8DA0B2" font-size="11">'+min.toFixed(1)+' kg</text>';
+}
+function renderTable(){
+  const tb = document.getElementById("mTable");
+  tb.innerHTML = "";
+  for(let w=1; w<=WEEKS; w++){
+    const k = S.weeks[w], t = weekTonnage(w);
+    if(!k.weight && !k.waist && !t) continue;
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>"+w+(w===curWeek?" ·":"")+"</td><td>"+(k.weight||"—")+"</td><td>"+(k.waist||"—")+"</td><td>"+(t?t.toLocaleString("tr-TR"):"—")+"</td>";
+    tb.appendChild(tr);
+  }
+  if(!tb.children.length) tb.innerHTML = '<tr><td colspan="4" class="muted">Henüz ölçüm yok.</td></tr>';
+}
+
+/* ---------- RAPOR ---------- */
+function weekReport(w){
+  const L = [];
+  const wk = S.weeks[w], prev = S.weeks[w-1];
+  L.push("## Hafta "+w+" ("+fmt(S.sessions[w+"-1"].date)+" – "+fmt(S.sessions[w+"-4"].date)+")");
+  const done = [1,2,3,4].filter(d=>S.sessions[w+"-"+d].done).length;
+  const donePrev = w>1 ? [1,2,3,4].filter(d=>S.sessions[(w-1)+"-"+d].done).length : 0;
+  let tline = "Tamamlanan antrenman: "+done+"/4 · Haftalık tonaj: "+weekTonnage(w).toLocaleString("tr-TR")+" kg";
+  if(w>1 && done===4 && donePrev===4 && weekTonnage(w-1)){
+    tline += " (önceki hafta "+weekTonnage(w-1).toLocaleString("tr-TR")+" kg, %"+
+      (((weekTonnage(w)-weekTonnage(w-1))/weekTonnage(w-1))*100).toFixed(1)+")";
+  } else if(w>1 && weekTonnage(w-1)){
+    tline += " — hafta tamamlanmadığı için toplam tonaj önceki haftayla kıyaslanmadı, hareket bazlı karşılaştırmaya bak";
+  }
+  L.push(tline);
+  let body = "Kilo: "+(wk.weight||"—")+" kg · Bel: "+(wk.waist||"—")+" cm";
+  if(prev && prev.weight && wk.weight) body += " · kilo farkı "+((num(wk.weight)-num(prev.weight))>0?"+":"")+(num(wk.weight)-num(prev.weight)).toFixed(1)+" kg";
+  if(prev && prev.waist && wk.waist) body += " · bel farkı "+((num(wk.waist)-num(prev.waist))>0?"+":"")+(num(wk.waist)-num(prev.waist)).toFixed(1)+" cm";
+  L.push(body);
+  L.push("");
+
+  for(let d=1; d<=4; d++){
+    const sess = S.sessions[w+"-"+d], day = PROGRAM[d-1];
+    if(!hasData(sess)){ L.push("### Gün "+d+" — "+day.title+" ("+day.focus+") — yapılmadı"); L.push(""); continue; }
+    L.push("### Gün "+d+" — "+day.title+" ("+day.focus+") · "+fmt(sess.date,true)+" · "+tonnage(sess).toLocaleString("tr-TR")+" kg");
+    day.ex.forEach(def=>{
+      const e = sess.ex[def.k];
+      if(!e) return;
+      const done = e.sets.map(setStr).filter(Boolean);
+      if(!done.length) return;
+      let best = 0, bs = null;
+      e.sets.forEach(s=>{ const v = e1rm(num(s.kg),num(s.reps)); if(v>best){best=v;bs=s;} });
+      let line = "- "+exName(def,e)+" (hedef "+def.s+"×"+def.r+"): "+done.join(", ");
+      if(best) line += " | tahmini 1RM ~"+best+" kg";
+      if(e.note) line += " | not: "+e.note;
+      const lp = lastPerf(def.k, w, d);
+      if(lp){
+        let pb=0; lp.e.sets.forEach(s=>{ const v=e1rm(num(s.kg),num(s.reps)); if(v>pb) pb=v; });
+        if(pb && best) line += " | önceki 1RM ~"+pb+" kg ("+(best-pb>=0?"+":"")+(best-pb)+")";
+      }
+      L.push(line);
+    });
+    if(sess.note) L.push("- Seans notu: "+sess.note);
+    L.push("");
+  }
+  if(wk.note){ L.push("**Haftalık değerlendirme:** "+wk.note); L.push(""); }
+  return L.join("\n");
+}
+function fullReport(){
+  const head = ["# Antrenman raporu — "+(scopeAll? "8 haftalık blok" : "Hafta "+curWeek),
+    "Program: 4 gün/hafta (Üst-Güç, Alt-Güç, Üst-Hipertrofi, Alt-Hipertrofi). Blok başlangıcı "+fmt(S.start)+".",
+    "Format: ağırlık×tekrar @RIR. RIR = sette bıraktığım tekrar sayısı.",""];
+  const body = scopeAll ? Array.from({length:WEEKS},(_,i)=>i+1).filter(w=>weekTonnage(w)>0||S.weeks[w].weight).map(weekReport)
+                        : [weekReport(curWeek)];
+  const tail = ["---","**Koçtan istediğim:** önümüzdeki hafta için ağırlık/tekrar ayarı, hacim dengesi ve zayıf kalan bölge üzerine öneri."];
+  return head.concat(body, tail).join("\n");
+}
+function renderRapor(){
+  document.getElementById("repMeta").textContent = scopeAll ? "tüm blok" : "hafta "+curWeek;
+  document.getElementById("btnScope").textContent = scopeAll ? "Sadece bu hafta" : "Tüm blok";
+  document.getElementById("repOut").textContent = fullReport();
+}
+
+/* ---------- OLAYLAR ---------- */
+document.querySelectorAll("nav.tabs button").forEach(b=>{
+  b.onclick = ()=>{
+    tab = b.dataset.tab;
+    document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.toggle("on", x===b));
+    document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on", s.id==="scr-"+tab));
+    if(tab==="olcum") renderOlcum();
+    if(tab==="rapor") renderRapor();
+    window.scrollTo(0,0);
+  };
+});
+document.getElementById("btnBack").onclick = closeSession;
+document.getElementById("btnFinish").onclick = ()=>{
+  const sess = S.sessions[curKey];
+  sess.done = !sess.done; save();
+  if(sess.done){ toast("Antrenman tamamlandı"); closeSession(); }
+  else { document.getElementById("btnFinish").textContent = "Antrenmanı tamamla"; }
+};
+document.getElementById("btnCopyPrev").onclick = ()=>{
+  const [w,d] = curKey.split("-").map(Number);
+  const sess = S.sessions[curKey];
+  let n = 0;
+  PROGRAM[d-1].ex.forEach(def=>{
+    const lp = lastPerf(def.k, w, d);
+    if(!lp) return;
+    const e = sess.ex[def.k] || (sess.ex[def.k] = blankEx(def));
+    if(e.sets.some(s=>s.kg!==""||s.reps!=="")) return;
+    e.sets = lp.e.sets.map(s=>({kg:s.kg, reps:s.reps, rir:""}));
+    if(!e.alt && lp.e.alt) e.alt = lp.e.alt;
+    n++;
+  });
+  save(); renderExercises();
+  toast(n? n+" hareket dolduruldu" : "Doldurulacak boş hareket yok");
+};
+document.getElementById("btnScope").onclick = ()=>{ scopeAll = !scopeAll; renderRapor(); };
+document.getElementById("btnCopy").onclick = async ()=>{
+  const txt = fullReport();
+  try{ await navigator.clipboard.writeText(txt); toast("Rapor kopyalandı"); }
+  catch(e){
+    const ta = document.createElement("textarea");
+    ta.value = txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); toast("Rapor kopyalandı"); }
+    catch(_){ toast("Kopyalanamadı, metni elle seç"); }
+    ta.remove();
+  }
+};
+document.getElementById("btnExport").onclick = ()=>{
+  const blob = new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "blok8w-"+iso(new Date())+".json";
+  a.click(); URL.revokeObjectURL(a.href);
+};
+document.getElementById("btnImport").onclick = ()=>document.getElementById("fileIn").click();
+document.getElementById("fileIn").onchange = ev=>{
+  const f = ev.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const d = JSON.parse(r.result);
+      if(!d.sessions || !d.weeks) throw new Error("format");
+      S = d; save(); renderBlok(); renderOlcum(); renderRapor();
+      toast("Yedek yüklendi");
+    }catch(e){ toast("Dosya okunamadı"); }
+  };
+  r.readAsText(f);
+};
+
+/* ---------- BAŞLAT ---------- */
+load();
+const nx0 = nextSession();
+curWeek = nx0 ? nx0.w : WEEKS;
+renderBlok(); renderOlcum(); renderRapor();
+
+if("serviceWorker" in navigator && location.protocol === "https:"){
+  navigator.serviceWorker.register("sw.js").catch(()=>{});
+}
 </script>
 </body>
 </html>
