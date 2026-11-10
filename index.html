@@ -3,84 +3,55 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
-<title>8 Haftalık Blok</title>
+<title>Recomp 2.0</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0E141B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Blok">
+<meta name="apple-mobile-web-app-title" content="Recomp">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png">
 <style>
 :root{
-  --bg:#0E141B;
-  --surface:#17202B;
-  --surface2:#1E2A38;
-  --line:#2A3948;
-  --text:#E9EFF5;
-  --muted:#8DA0B2;
-  --strength:#D2352C;
-  --hyper:#2D6FD1;
-  --signal:#E8B33A;
-  --done:#45A06E;
+  --bg:#0E141B; --surface:#17202B; --surface2:#1E2A38; --line:#2A3948;
+  --text:#E9EFF5; --muted:#8DA0B2;
+  --strength:#D2352C; --hyper:#2D6FD1; --signal:#E8B33A; --done:#45A06E; --cardio:#5BC0BE;
   --r:14px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0}
-body{
-  background:var(--bg);
-  color:var(--text);
+body{background:var(--bg);color:var(--text);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  font-feature-settings:"tnum" 1,"cv05" 1;
-  font-size:16px;line-height:1.45;
-  padding-bottom:calc(74px + env(safe-area-inset-bottom));
-  overscroll-behavior-y:contain;
-}
+  font-feature-settings:"tnum" 1;font-size:16px;line-height:1.45;
+  padding-bottom:calc(76px + env(safe-area-inset-bottom));overscroll-behavior-y:contain}
 .wrap{max-width:560px;margin:0 auto;padding:0 16px}
 h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.02em}
 button,input,textarea,select{font:inherit;color:inherit}
 button{background:none;border:0;cursor:pointer}
-input,textarea{
-  background:var(--surface2);border:1px solid var(--line);border-radius:10px;
-  color:var(--text);padding:10px 12px;width:100%;
-}
-input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+input,textarea,select{background:var(--surface2);border:1px solid var(--line);border-radius:10px;color:var(--text);padding:10px 12px;width:100%}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px}
+input:focus,textarea:focus,select:focus,button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 textarea{resize:vertical;line-height:1.5}
-.muted{color:var(--muted)}
-.small{font-size:13px}
+.muted{color:var(--muted)} .small{font-size:13px}
 
-/* header */
-header.top{
-  padding:calc(14px + env(safe-area-inset-top)) 0 10px;
-  position:sticky;top:0;z-index:20;
-  background:linear-gradient(var(--bg) 78%, rgba(14,20,27,0));
-}
+header.top{padding:calc(14px + env(safe-area-inset-top)) 0 10px;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg) 78%,rgba(14,20,27,0))}
 .brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.brand h1{font-size:19px}
-.brand .meta{font-size:13px;color:var(--muted)}
+.brand h1{font-size:19px} .brand .meta{font-size:13px;color:var(--muted)}
 
-/* week strip */
 .weeks{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;margin:0 -16px;scrollbar-width:none}
 .weeks::-webkit-scrollbar{display:none}
-.wk{
-  flex:0 0 auto;min-width:56px;padding:8px 0;border-radius:12px;
-  background:var(--surface);border:1px solid var(--line);text-align:center;
-}
+.wk{flex:0 0 auto;min-width:56px;padding:8px 0;border-radius:12px;background:var(--surface);border:1px solid var(--line);text-align:center}
 .wk b{display:block;font-size:17px;font-weight:800;line-height:1.1}
-.wk span{display:block;font-size:10.5px;color:var(--muted);letter-spacing:.02em}
+.wk span{display:block;font-size:10.5px;color:var(--muted)}
 .wk.on{background:var(--signal);border-color:var(--signal);color:#16202B}
 .wk.on span{color:#16202B;opacity:.7}
-.wk.full{border-color:var(--done)}
-.wk.full span{color:var(--done)}
-.wk.on.full span{color:#16202B}
+.wk.full{border-color:var(--done)} .wk.full span{color:var(--done)} .wk.on.full span{color:#16202B}
+.wk.dl b::after{content:"▽";font-size:9px;vertical-align:super;margin-left:2px;color:var(--cardio)}
+.wk.on.dl b::after{color:#16202B}
 
-/* session rows */
 .rows{display:flex;flex-direction:column;gap:10px;margin-top:4px}
-.row{
-  display:flex;align-items:stretch;gap:0;width:100%;text-align:left;
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
-}
+.row{display:flex;align-items:stretch;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .bar{width:5px;flex:0 0 5px;background:var(--strength)}
 .bar.h{background:var(--hyper)}
 .row .body{padding:12px 14px;flex:1;min-width:0}
@@ -88,30 +59,21 @@ header.top{
 .row .t b{font-size:16px;font-weight:700}
 .row .t .d{font-size:12.5px;color:var(--muted);white-space:nowrap}
 .row .sub{font-size:13px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row.done{background:var(--surface)}
-.row.done .t b::after{content:"✓";color:var(--done);font-size:13px;margin-left:8px;font-weight:700}
+.row.done .t b::after{content:"✓";color:var(--done);font-size:13px;margin-left:8px}
 .row.next{border-color:var(--signal)}
 
-/* hero */
-.hero{
-  border:1px solid var(--line);border-radius:18px;background:var(--surface);
-  padding:16px;margin:2px 0 18px;position:relative;overflow:hidden;
-}
+.hero{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:16px;margin:2px 0 18px;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--signal)}
 .hero .kick{font-size:12.5px;color:var(--signal);font-weight:600}
 .hero h2{font-size:26px;margin:4px 0 2px;letter-spacing:-.03em}
 .hero .when{font-size:13.5px;color:var(--muted)}
 .hero .prev{margin:12px 0 14px;font-size:13.5px;color:var(--muted);line-height:1.7}
 .hero .prev i{font-style:normal;color:var(--text)}
-.go{
-  display:block;width:100%;background:var(--signal);color:#16202B;font-weight:800;
-  border-radius:12px;padding:14px;text-align:center;font-size:16px;
-}
+.go{display:block;width:100%;background:var(--signal);color:#16202B;font-weight:800;border-radius:12px;padding:14px;text-align:center;font-size:16px}
 
-/* section */
-.sec{margin:22px 0 10px;font-size:13px;color:var(--muted);font-weight:600}
+.sec{margin:22px 0 10px;font-size:13px;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sec button{font-size:13px;color:var(--signal);font-weight:600}
 
-/* exercise card */
 .ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
 .ex>header{padding:12px 14px 10px;border-bottom:1px solid var(--line)}
 .ex .name{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
@@ -119,110 +81,145 @@ header.top{
 .ex .name .target{font-size:12.5px;color:var(--muted);white-space:nowrap}
 .ex .last{font-size:12.5px;color:var(--muted);margin-top:4px}
 .ex .last i{font-style:normal;color:#C6D4E0}
-.grid{display:grid;grid-template-columns:26px 1fr 1fr 1fr 30px;gap:8px;align-items:center;padding:0 14px}
-.grid.head{padding-top:10px;padding-bottom:2px;font-size:11.5px;color:var(--muted)}
-.grid.head span:first-child{text-align:center}
+.ex .tip{font-size:12.5px;color:var(--cardio);margin-top:6px;line-height:1.45}
+.up{display:inline-block;margin-top:7px;font-size:12px;font-weight:700;color:#0C1A12;background:var(--done);border-radius:999px;padding:3px 9px}
+.grid{display:grid;grid-template-columns:24px 1fr 1fr 1fr 26px;gap:7px;align-items:center;padding:0 12px}
+.grid.uni{grid-template-columns:24px 1fr 1fr 1fr 1fr 26px;gap:6px}
+.grid.head{padding-top:10px;padding-bottom:2px;font-size:11px;color:var(--muted);text-align:center}
 .setrow{padding-top:8px}
 .setrow:last-of-type{padding-bottom:4px}
 .setrow .n{text-align:center;font-size:13px;color:var(--muted)}
-.setrow input{padding:11px 8px;text-align:center;font-size:16px;font-weight:600}
+.setrow input{padding:11px 4px;text-align:center;font-size:16px;font-weight:600}
 .setrow input.filled{border-color:#3C536B;background:#223143}
-.del{color:var(--muted);font-size:20px;line-height:1;padding:6px 0}
+.del{color:var(--muted);font-size:19px;line-height:1;padding:6px 0}
 .exfoot{display:flex;gap:8px;padding:10px 14px 12px;flex-wrap:wrap}
-.chip{
-  background:var(--surface2);border:1px solid var(--line);border-radius:999px;
-  padding:7px 12px;font-size:13px;color:#C6D4E0;
-}
+.chip{background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:13px;color:#C6D4E0}
 .chip.act{border-color:var(--signal);color:var(--signal)}
 .exnote{padding:0 14px 12px}
 .exnote input{font-size:14px;padding:9px 12px}
 
-/* session screen */
-.screen{display:none}
-.screen.on{display:block}
+.screen{display:none} .screen.on{display:block}
 .sheet{position:fixed;inset:0;background:var(--bg);z-index:40;overflow-y:auto;display:none;padding-bottom:calc(120px + env(safe-area-inset-bottom))}
 .sheet.on{display:block}
-.sheethead{
-  position:sticky;top:0;z-index:5;background:var(--bg);
-  padding:calc(12px + env(safe-area-inset-top)) 16px 12px;border-bottom:1px solid var(--line);
-}
-.sheethead .line1{display:flex;align-items:center;gap:12px}
+.sheethead{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(12px + env(safe-area-inset-top)) 16px 12px;border-bottom:1px solid var(--line)}
+.sheethead .line1{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .back{font-size:15px;color:var(--signal);font-weight:600;padding:4px 0}
 .sheethead h2{font-size:19px;margin-top:8px}
 .sheethead .dt{display:flex;gap:10px;align-items:center;margin-top:10px}
 .sheethead .dt input{max-width:190px;padding:8px 10px;font-size:14px}
+.sheethead .dnote{font-size:12.5px;color:var(--cardio);margin-top:8px;line-height:1.45}
 .tag{font-size:11.5px;padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
 .tag.s{color:var(--strength);border-color:#4A2220}
 .tag.h{color:var(--hyper);border-color:#1E3A5F}
-.finish{
-  position:fixed;left:0;right:0;bottom:0;z-index:45;padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-  background:linear-gradient(rgba(14,20,27,0),var(--bg) 32%);display:none;
-}
+.tag.dl{color:var(--cardio);border-color:#1F4A48}
+.finish{position:fixed;left:0;right:0;bottom:0;z-index:45;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(rgba(14,20,27,0),var(--bg) 32%);display:none}
 .finish.on{display:block}
 .finish .inner{max-width:560px;margin:0 auto;display:flex;gap:10px}
 .finish button{flex:1;border-radius:12px;padding:14px;font-weight:800;font-size:15px;background:var(--done);color:#0C1A12}
 .finish button.ghost{flex:0 0 auto;background:var(--surface2);color:var(--text);border:1px solid var(--line);padding:14px 16px;font-weight:600}
 
-/* nav */
-nav.tabs{
-  position:fixed;left:0;right:0;bottom:0;z-index:30;
-  background:rgba(14,20,27,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);
-  padding-bottom:env(safe-area-inset-bottom);
-}
-nav.tabs .inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr)}
-nav.tabs button{padding:12px 0 14px;font-size:12.5px;color:var(--muted);font-weight:600}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(14,20,27,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs .inner{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs button{padding:11px 0 13px;font-size:11.5px;color:var(--muted);font-weight:600}
 nav.tabs button.on{color:var(--signal)}
-nav.tabs button b{display:block;font-size:17px;font-weight:700;margin-bottom:2px}
+nav.tabs button b{display:block;font-size:16px;font-weight:700;margin-bottom:2px}
 
-/* measure */
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:12px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
 .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:6px}
 .delta{font-size:12.5px;margin-top:6px;color:var(--muted)}
-.delta b{color:var(--done);font-weight:700}
-.delta b.up{color:var(--signal)}
+.delta b{color:var(--done);font-weight:700} .delta b.warn{color:var(--signal)}
 .spark{width:100%;height:96px;display:block;margin:6px 0 2px}
 .tbl{width:100%;border-collapse:collapse;font-size:13.5px}
 .tbl th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;padding:6px 0;border-bottom:1px solid var(--line)}
 .tbl td{padding:8px 0;border-bottom:1px solid var(--line)}
 .tbl td:not(:first-child),.tbl th:not(:first-child){text-align:right}
 
-/* report */
-pre.rep{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
-  padding:14px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;max-height:56vh;overflow:auto;
-}
+.daynav{display:flex;align-items:center;gap:10px;margin-top:10px}
+.daynav button.arw{background:var(--surface2);border:1px solid var(--line);border-radius:10px;width:40px;height:40px;font-size:18px;flex:0 0 40px}
+.daynav .lbl{flex:1;text-align:center}
+.daynav .lbl b{display:block;font-size:17px;font-weight:700}
+.daynav .lbl span{font-size:12px;color:var(--muted)}
+.meter{height:7px;background:var(--surface2);border-radius:999px;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--signal);border-radius:999px}
+.meter.p i{background:var(--done)} .meter.over i{background:var(--strength)}
+.kpi{display:flex;justify-content:space-between;align-items:baseline;font-size:13px}
+.kpi b{font-size:16px;font-weight:700}
+.meal{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.meal header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 14px 0}
+.meal header .slot{font-size:12.5px;color:var(--muted);font-weight:600}
+.meal header button{font-size:13px;color:var(--signal);font-weight:600}
+.meal .nm{padding:8px 14px 0} .meal .nm input{font-size:15px}
+.macro{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px 14px 12px}
+.macro label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;text-align:center}
+.macro input{padding:10px 6px;text-align:center;font-weight:600}
+.macro input.filled{border-color:#3C536B;background:#223143}
+.rec{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--surface)}
+.rec h4{margin:0 0 4px;font-size:15.5px;font-weight:700}
+.rec .m{font-size:12.5px;color:var(--muted)}
+.rec .ing{font-size:13px;color:#C6D4E0;margin-top:8px;line-height:1.5}
+.rec .how{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+.rec .acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.rec a.chip,.rec button.chip{text-decoration:none;display:inline-block}
+.prep{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-left:6px;white-space:nowrap}
+.prep.pre{color:var(--cardio);border-color:#1F4A48}
+
+pre.rep{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;max-height:50vh;overflow:auto}
 .btnrow{display:flex;gap:10px;margin:12px 0}
 .btn{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px;font-weight:700;font-size:14.5px;text-align:center}
 .btn.pri{background:var(--signal);color:#16202B;border-color:var(--signal)}
-.toast{
-  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom));
-  background:#E9EFF5;color:#0E141B;padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:700;
-  z-index:60;opacity:0;pointer-events:none;transition:opacity .18s
-}
+.btn.wide{flex:1 1 100%}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom));background:#E9EFF5;color:#0E141B;padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:700;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
 .toast.on{opacity:1}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
 <div id="app">
-  <!-- ANTRENMAN -->
   <section class="screen on" id="scr-blok">
     <header class="top"><div class="wrap">
-      <div class="brand"><h1>8 haftalık blok</h1><span class="meta" id="blokMeta"></span></div>
-    </div>
-    <div class="wrap"><div class="weeks" id="weekStrip"></div></div>
-    </header>
+      <div class="brand"><h1>Recomp 2.0</h1><span class="meta" id="blokMeta"></span></div>
+    </div><div class="wrap"><div class="weeks" id="weekStrip"></div></div></header>
     <div class="wrap">
       <div id="heroSlot"></div>
-      <div class="sec" id="weekLabel"></div>
+      <div class="sec"><span id="weekLabel"></span></div>
       <div class="rows" id="sessionRows"></div>
     </div>
   </section>
 
-  <!-- ÖLÇÜM -->
+  <section class="screen" id="scr-gun">
+    <header class="top"><div class="wrap">
+      <div class="brand"><h1>Gün</h1><span class="meta" id="gunMeta"></span></div>
+      <div class="daynav">
+        <button class="arw" id="dPrev" aria-label="Önceki gün">‹</button>
+        <div class="lbl"><b id="dLabel"></b><span id="dSub"></span></div>
+        <button class="arw" id="dNext" aria-label="Sonraki gün">›</button>
+      </div>
+    </div></header>
+    <div class="wrap">
+      <div class="card" id="dayTotals"></div>
+      <div class="card">
+        <div class="three">
+          <div class="field"><label for="dSleep">Uyku (sa)</label><input id="dSleep" inputmode="decimal" placeholder="–"></div>
+          <div class="field"><label for="dEnergy">Enerji</label><select id="dEnergy">
+            <option value="">–</option><option value="1">1 çok düşük</option><option value="2">2 düşük</option>
+            <option value="3">3 orta</option><option value="4">4 iyi</option><option value="5">5 çok iyi</option></select></div>
+          <div class="field"><label for="dPain">Bel</label><select id="dPain">
+            <option value="">–</option><option value="yok">yok</option><option value="hafif">hafif</option>
+            <option value="orta">orta</option><option value="şiddetli">şiddetli</option></select></div>
+        </div>
+      </div>
+      <div class="sec"><span>Öğünler</span><button id="btnMenu">Haftanın menüsü</button></div>
+      <div id="mealList"></div>
+      <div class="sec"><span>Kardiyo</span><button id="btnAddCardio">+ ekle</button></div>
+      <div id="cardioList"></div>
+      <div class="card"><div class="field"><label for="dayNote">Günün notu</label>
+        <textarea id="dayNote" rows="2" placeholder="Açlık, enerji, ağrı, su..."></textarea></div></div>
+    </div>
+  </section>
+
   <section class="screen" id="scr-olcum">
     <header class="top"><div class="wrap">
       <div class="brand"><h1>Ölçüm</h1><span class="meta">haftada bir, aynı sabah</span></div>
@@ -235,19 +232,17 @@ pre.rep{
         </div>
         <div class="delta" id="mDelta"></div>
       </div>
-      <div class="card">
-        <div class="field"><label for="mNote">Haftalık değerlendirme</label>
-        <textarea id="mNote" rows="5" placeholder="Uyku, enerji, ağrı, iştah, kaçan antrenman, koça soru..."></textarea></div>
-      </div>
+      <div class="card"><div class="field"><label for="mNote">Haftalık değerlendirme</label>
+        <textarea id="mNote" rows="5" placeholder="Uyku, enerji, açlık, bel, kaçan antrenman, koça soru..."></textarea></div></div>
       <div class="card">
         <svg class="spark" id="spark" viewBox="0 0 320 96" preserveAspectRatio="none" aria-hidden="true"></svg>
-        <table class="tbl"><thead><tr><th>Hafta</th><th>Kilo</th><th>Bel</th><th>Tonaj</th></tr></thead>
+        <table class="tbl"><thead><tr><th>Hafta</th><th>Kilo</th><th>Bel</th><th>Ø kcal</th><th>Ø protein</th></tr></thead>
         <tbody id="mTable"></tbody></table>
+        <p class="small muted" id="baseRef" style="margin:10px 0 0"></p>
       </div>
     </div>
   </section>
 
-  <!-- RAPOR -->
   <section class="screen" id="scr-rapor">
     <header class="top"><div class="wrap">
       <div class="brand"><h1>Koç raporu</h1><span class="meta" id="repMeta"></span></div>
@@ -258,39 +253,73 @@ pre.rep{
         <button class="btn" id="btnScope">Tüm blok</button>
       </div>
       <pre class="rep" id="repOut"></pre>
+      <div class="btnrow"><button class="btn wide" id="btnAI">Haftalık analizi Claude'a yaptır</button></div>
+      <pre class="rep" id="aiOut" style="display:none"></pre>
+
+      <div class="sec"><span>Blok ve hedefler</span></div>
+      <div class="card">
+        <div class="field"><label for="cStart">1. haftanın pazartesisi</label><input type="date" id="cStart"></div>
+        <p class="small muted" style="margin:8px 0 0">Koç, blok öncesi bir hafta deload önerdi. Deloadı atlıyorsan tarihi bir hafta öne çek.</p>
+      </div>
+      <div class="card">
+        <div class="two">
+          <div class="field"><label for="cKcalT">Antrenman günü (kcal)</label><input id="cKcalT" inputmode="numeric"></div>
+          <div class="field"><label for="cKcalR">Dinlenme günü (kcal)</label><input id="cKcalR" inputmode="numeric"></div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="two">
+          <div class="field"><label for="cProtMin">Protein alt (g)</label><input id="cProtMin" inputmode="numeric"></div>
+          <div class="field"><label for="cProtMax">Protein üst (g)</label><input id="cProtMax" inputmode="numeric"></div>
+        </div>
+        <p class="small muted" id="maintHint" style="margin:10px 0 0"></p>
+      </div>
+      <div class="card">
+        <div class="field"><label for="cKey">Anthropic API anahtarı (isteğe bağlı)</label>
+          <input id="cKey" type="password" placeholder="sk-ant-..." autocomplete="off"></div>
+        <div style="height:10px"></div>
+        <div class="field"><label for="cModel">Model</label><input id="cModel" placeholder="claude-sonnet-5-5"></div>
+        <p class="small muted" style="margin-bottom:0">Anahtar sadece bu tarayıcıda durur, JSON yedeğine yazılmaz.</p>
+      </div>
+
       <div class="btnrow">
         <button class="btn" id="btnExport">JSON yedek al</button>
         <button class="btn" id="btnImport">Yedek yükle</button>
       </div>
-      <p class="small muted">Veriler yalnızca bu telefonun tarayıcısında (localStorage) tutulur. Telefon değiştirince JSON yedeğiyle taşı.</p>
+      <div class="btnrow"><button class="btn wide" id="btnOld">Önceki bloğun verisini indir</button></div>
+      <p class="small muted">Veriler bu tarayıcıda (localStorage) tutulur. Önceki blok ayrı anahtarda duruyor, silinmedi.</p>
       <input type="file" id="fileIn" accept="application/json" style="display:none">
     </div>
   </section>
 </div>
 
-<!-- SEANS EKRANI -->
 <div class="sheet" id="sheet">
   <div class="sheethead">
-    <div class="line1"><button class="back" id="btnBack">‹ Blok</button><span class="tag" id="shTag"></span></div>
+    <div class="line1"><button class="back" id="btnBack">‹ Blok</button><span class="tag" id="shTag"></span><span class="tag dl" id="shDl" style="display:none">Deload</span></div>
     <h2 id="shTitle"></h2>
-    <div class="dt">
-      <input type="date" id="shDate">
-      <span class="small muted" id="shStat"></span>
-    </div>
+    <div class="dt"><input type="date" id="shDate"><span class="small muted" id="shStat"></span></div>
+    <div class="dnote" id="shDayNote"></div>
   </div>
   <div class="wrap" style="padding-top:14px" id="exList"></div>
-  <div class="wrap">
-    <div class="card"><div class="field"><label for="shNote">Seans notu</label>
-      <textarea id="shNote" rows="3" placeholder="Nasıl geçti? Ağrı, teknik, süre..."></textarea></div></div>
-  </div>
+  <div class="wrap"><div class="card"><div class="field"><label for="shNote">Seans notu</label>
+    <textarea id="shNote" rows="3" placeholder="Nasıl geçti? Ağrı, teknik, makine..."></textarea></div></div></div>
 </div>
 <div class="finish" id="finishBar"><div class="inner">
   <button id="btnFinish">Antrenmanı tamamla</button>
   <button class="ghost" id="btnCopyPrev">Geçen sefer</button>
 </div></div>
 
+<div class="sheet" id="sheet2">
+  <div class="sheethead">
+    <div class="line1"><button class="back" id="btnBack2">‹ Geri</button></div>
+    <h2 id="s2Title"></h2>
+    <p class="small muted" id="s2Sub" style="margin:6px 0 0"></p>
+  </div>
+  <div class="wrap" style="padding-top:14px" id="s2Body"></div>
+</div>
+
 <nav class="tabs"><div class="inner">
   <button class="on" data-tab="blok"><b>◧</b>Antrenman</button>
+  <button data-tab="gun"><b>◍</b>Gün</button>
   <button data-tab="olcum"><b>◔</b>Ölçüm</button>
   <button data-tab="rapor"><b>◈</b>Rapor</button>
 </div></nav>
@@ -300,559 +329,951 @@ pre.rep{
 <script>
 "use strict";
 
-/* ---------- PROGRAM ---------- */
-const PROGRAM = [
-  {d:1, title:"Üst", focus:"Güç", ex:[
-    {k:"bench",   n:"Bench Press",        s:4, r:"5",     u:"kg"},
-    {k:"ohp",     n:"Overhead Press",     s:4, r:"6",     u:"kg"},
-    {k:"pullup",  n:"Pull-up",            s:4, r:"6–8",   u:"kg"},
-    {k:"row",     n:"Barbell Row",        s:4, r:"6–8",   u:"kg"},
-    {k:"lateral", n:"Lateral Raise",      s:4, r:"12–15", u:"kg"}
-  ]},
-  {d:2, title:"Alt", focus:"Güç", ex:[
-    {k:"squat",   n:"Squat",              s:4, r:"5",     u:"kg"},
-    {k:"rdl",     n:"Romanian Deadlift",  s:4, r:"6–8",   u:"kg"},
-    {k:"legpress",n:"Leg Press",          s:3, r:"10",    u:"kg"},
-    {k:"legcurl", n:"Leg Curl",           s:3, r:"10",    u:"kg"},
-    {k:"calf",    n:"Calf Raise",         s:4, r:"12",    u:"kg"}
-  ]},
-  {d:3, title:"Üst", focus:"Hipertrofi", ex:[
-    {k:"incdb",   n:"Incline Dumbbell Press", s:3, r:"10", u:"kg"},
-    {k:"csrow",   n:"Chest-Supported Row",    s:4, r:"10", u:"kg"},
-    {k:"latpull", n:"Lat Pulldown",           s:4, r:"10", u:"kg"},
-    {k:"cablelat",n:"Cable Lateral Raise",    s:4, r:"15", u:"kg"},
-    {k:"curl",    n:"Dumbbell Curl",          s:3, r:"12", u:"kg"},
-    {k:"pushdown",n:"Triceps Pushdown",       s:3, r:"12", u:"kg"}
-  ]},
-  {d:4, title:"Alt", focus:"Hipertrofi", ex:[
-    {k:"deadlift",n:"Trap Bar / hafif Deadlift", s:3, r:"5",     u:"kg"},
-    {k:"lunge",   n:"Reverse Lunge",            s:3, r:"10",    u:"kg"},
-    {k:"legext",  n:"Leg Extension",            s:3, r:"12–15", u:"kg"},
-    {k:"legcurl", n:"Leg Curl",                 s:3, r:"12–15", u:"kg"},
-    {k:"hlr",     n:"Hanging Leg Raise",        s:3, r:"15",    u:"bw"},
-    {k:"plank",   n:"Plank",                    s:3, r:"sn",    u:"sn"}
-  ]}
+/* ===== PROGRAM: Recomp 2.0 ===== */
+const PROGRAM=[
+ {d:1,title:"Upper A",focus:"Güç",note:"Sırt ve omuz öncelikli. Row'da gövdeyi geriye savurma, omuz press'te beli aşırı çukurlaştırma.",ex:[
+  {k:"benchm",n:"Bench Press Machine",s:3,r:"6–8",rir:"2",st:"65–70 kg"},
+  {k:"shpress",n:"Shoulder Press Machine / DB",s:3,r:"6–8",rir:"2",st:"40 kg"},
+  {k:"latpull",n:"Lat Pulldown",s:3,r:"8–10",rir:"2",st:"45–50 kg"},
+  {k:"cablerow",n:"Seated Cable Row",s:3,r:"8–10",rir:"2",st:"40–45 kg"},
+  {k:"cablelat",n:"Cable Lateral Raise",s:3,r:"12–15",rir:"1–2"},
+  {k:"facepull",n:"Face Pull",s:2,r:"15–20",rir:"2"}]},
+ {d:2,title:"Lower A",focus:"Güç",note:"Bel kontrollü. Leg press derinliğini bel pozisyonunu bozmayacak noktada tut; lunge'da sabit bir yerden destek al.",ex:[
+  {k:"legpress",n:"Leg Press",s:3,r:"8–10",rir:"2–3",st:"90–100 kg"},
+  {k:"lunge",n:"Supported Reverse Lunge",s:3,r:"8–10",rir:"2",uni:true},
+  {k:"legcurl",n:"Lying Leg Curl",s:3,r:"8–10",rir:"2",st:"50–55 kg"},
+  {k:"legext",n:"Leg Extension",s:2,r:"12–15",rir:"2",st:"35–40 kg"},
+  {k:"calf",n:"Seated Calf Raise",s:4,r:"10–15",rir:"1–2"},
+  {k:"deadbug",n:"Dead Bug",s:2,r:"10",rir:"kontrollü",u:"bw",uni:true,tip:"Taraf başına 10 tekrar, kontrollü."}]},
+ {d:3,title:"Upper B",focus:"Hipertrofi",note:"Sırt, arka omuz ve kanat önceliği.",ex:[
+  {k:"incdb",n:"Incline DB Press",s:3,r:"8–12",rir:"2",st:"17.5–20 kg/el",u:"el"},
+  {k:"csrow",n:"Chest-Supported Row",s:4,r:"8–12",rir:"1–2",st:"17.5–20 kg/el",u:"el"},
+  {k:"sapull",n:"Single-Arm Cable Pulldown",s:3,r:"10–12",rir:"2",uni:true,
+   tip:"Önce sol tarafı çalıştır; sağ, solun tekrarını geçmesin. Ağırlığı değil hareket kalitesini eşitle."},
+  {k:"rdelt",n:"Reverse Pec Deck / Rear Delt Fly",s:3,r:"15–20",rir:"1–2"},
+  {k:"cablelat",n:"Cable Lateral Raise",s:3,r:"12–20",rir:"1–2"},
+  {k:"curl",n:"DB Curl",s:3,r:"10–12",rir:"1–2",st:"9–10 kg/el",u:"el"},
+  {k:"pushdown",n:"Triceps Pushdown",s:2,r:"10–15",rir:"1–2",st:"45–50 kg"}]},
+ {d:4,title:"Lower B",focus:"Hipertrofi",note:"Hack squat yoksa goblet squat ile başla; ağrısız ilerliyorsa Smith squat'a geçebilirsin.",ex:[
+  {k:"gsquat",n:"Goblet Squat / Smith Squat",s:3,r:"10–12",rir:"3"},
+  {k:"legext",n:"Leg Extension",s:3,r:"12–15",rir:"1–2"},
+  {k:"legcurl",n:"Lying Leg Curl",s:3,r:"10–15",rir:"1–2"},
+  {k:"lunge",n:"Supported Reverse Lunge",s:2,r:"10",rir:"2",uni:true},
+  {k:"calf",n:"Calf Raise",s:3,r:"12–15",rir:"1–2"},
+  {k:"plank",n:"Plank",s:3,r:"30–45",rir:"kontrollü",u:"sn"}]}
 ];
-const DAY_OFFSET = [0,2,4,6];          // Pzt, Çar, Cum, Paz
-const START = "2026-09-07";
-const WEEKS = 8;
-const KEY = "blok8w.v1";
+const DAY_OFFSET=[0,1,3,5];                 // Pzt, Sal, Per, Cmt
+const WEEKS=8, DELOAD=4;
+const KEY="blokrecomp2.v1", OLDKEY="blok8w.v1";
+const DEF_START="2026-11-16";               // deload haftasından sonraki pazartesi
+const PHASE={1:"Adaptasyon",2:"Adaptasyon",3:"Adaptasyon",4:"Deload",5:"Gelişim",6:"Gelişim",7:"Gelişim",8:"Konsolidasyon"};
 
-/* ---------- İLK 5 ANTRENMAN ---------- */
-const SEED = {
-  "1-1":{date:"2026-09-07",done:true,ex:{
-    bench:"50x5|50x5|50x5|50x5",
-    ohp:"30x8|30x8|30x8|30x8",
-    pullup:{alt:"Lat Pulldown", sets:"45x6|45x6|45x6|45x6"},
-    row:"30x8|30x8|30x8|30x8",
-    lateral:"7.5x10|7.5x10|7.5x10|7.5x10"}},
-  "1-2":{date:"2026-09-09",done:true,ex:{
-    squat:{alt:"Smith Machine Squat", sets:"65x5|65x5|65x5|65x5"},
-    rdl:"45x8|45x8|45x8|45x8",
-    legpress:"80x10|80x10|80x10",
-    legcurl:{note:"lying", sets:"40x10|40x10|40x10"},
-    calf:"60x12|60x12|60x12|60x12"}},
-  "1-3":{date:"2026-09-11",done:true,ex:{
-    incdb:{note:"her el 15 kg", sets:"15x10|15x10|15x10"},
-    csrow:{note:"her el 15 kg", sets:"15x10|15x10|15x10|15x10"},
-    latpull:"50x10|50x10|50x10|50x10",
-    cablelat:"10x10|10x10|10x10|10x10",
-    curl:{note:"her kol 7.5 kg", sets:"7.5x12|7.5x12|7.5x12"},
-    pushdown:"25x12|25x12|25x12"}},
-  "1-4":{date:"2026-09-13",done:true,ex:{
-    deadlift:{alt:"Deadlift", sets:"60x5|60x5|60x5"},
-    lunge:"15x10|15x10|15x10",
-    legext:"30x12|30x12|30x12",
-    legcurl:{note:"lying", sets:"45x12|45x12|45x12"},
-    hlr:{alt:"Leg Raise", sets:"x12|x12|x12"},
-    plank:{note:"saniye", sets:"x45|x45|x45"}}},
-  "2-1":{date:"2026-09-15",done:true,ex:{
-    bench:"60x4|60x4|60x4|60x4",
-    ohp:"30x10|30x10|30x10|30x10",
-    pullup:{alt:"Lat Pulldown", sets:"45x6|45x6|45x6|45x6"},
-    row:"30x10|30x10|30x10|30x10",
-    lateral:"7.5x10|7.5x10|7.5x10|7.5x10"}},
-  "2-2":{date:"2026-09-17",done:false,ex:{}}
-};
+/* ===== TARİFLER ===== */
+const RECIPES=[
+ {id:"menemen",n:"Menemen + tam buğday ekmek + lor",s:1,k:500,p:33,c:42,f:22,pre:false,
+  i:"3 yumurta, 2 domates, 1 sivri biber, 1 tk zeytinyağı, 60 g lor, 2 dilim tam buğday ekmek",
+  h:"Biberi soteleyip domatesi ekle, suyu çekince yumurtaları kır. Loru yanında ver."},
+ {id:"overnight",n:"Gece yulafı: yulaf, süt, muz, fıstık ezmesi",s:1,k:520,p:28,c:68,f:16,pre:true,
+  i:"60 g yulaf, 250 ml süt, 1 muz, 1 tk fıstık ezmesi, tarçın",
+  h:"Akşamdan kavanozda karıştır, buzdolabında beklet."},
+ {id:"omlet-peynir",n:"Peynirli omlet + zeytin + ekmek",s:1,k:510,p:32,c:30,f:28,pre:false,
+  i:"3 yumurta, 40 g beyaz peynir, 8 zeytin, 2 dilim tam buğday ekmek, salatalık, domates",
+  h:"Yumurtayı az yağda çırp, peyniri içine rendele."},
+ {id:"pankek",n:"Lorlu yulaflı protein pankek",s:1,k:490,p:38,c:52,f:12,pre:true,
+  i:"50 g yulaf, 100 g lor, 2 yumurta, 1 ölçek protein tozu, 1 tk bal, meyve",
+  h:"Blenderdan geçir, yapışmaz tavada 4-5 küçük pankek pişir. Hamur akşamdan hazırlanır."},
+ {id:"tost",n:"Peynirli yumurtalı tam buğday tost",s:1,k:500,p:31,c:45,f:21,pre:false,
+  i:"2 dilim tam buğday ekmek, 50 g kaşar, 2 yumurta, domates, roka",
+  h:"Yumurtayı sahanda pişir, tostun yanına koy."},
+ {id:"yogurt-bowl",n:"Yoğurt kasesi: yulaf, yaban mersini, ceviz, whey",s:1,k:505,p:40,c:48,f:14,pre:true,
+  i:"250 g süzme yoğurt, 40 g yulaf, 1 avuç yaban mersini, 3 ceviz, 1 ölçek protein tozu",
+  h:"Yoğurdu protein tozuyla karıştır, üstüne yulaf ve meyve. Kavanozda taşınır."},
+ {id:"sucuklu",n:"Az sucuklu yumurta + salata + ekmek",s:1,k:530,p:30,c:36,f:29,pre:false,
+  i:"3 yumurta, 30 g dana sucuk, 2 dilim ekmek, mevsim salata, 1 tk zeytinyağı",
+  h:"Sucuğu yağ bırakana kadar kızdır, fazla yağı al, yumurtaları üstüne kır."},
 
-/* ---------- STATE ---------- */
-let S = null, tab="blok", curWeek=1, curKey=null, scopeAll=false;
+ {id:"tavuk-bulgur",n:"Fırında tavuk göğsü + bulgur pilavı + çoban salata",s:2,k:610,p:48,c:62,f:16,pre:true,
+  i:"180 g tavuk göğsü, 70 g (çiğ) bulgur, domates, salatalık, soğan, 1 ys zeytinyağı",
+  h:"Tavuğu baharatlayıp 200°C'de 22 dk pişir. 3 porsiyon pişirip kaplara böl."},
+ {id:"nohut",n:"Etli nohut + pirinç + cacık",s:2,k:620,p:42,c:78,f:14,pre:true,
+  i:"120 g kuşbaşı dana, 150 g haşlanmış nohut, 60 g (çiğ) pirinç, 150 g yoğurt, salatalık",
+  h:"Eti kendi suyunda yumuşat, nohutla kaynat. 3 güne kadar dayanır."},
+ {id:"somon",n:"Fırın somon + fırın patates + yeşil salata",s:2,k:640,p:44,c:48,f:26,pre:false,
+  i:"180 g somon, 250 g patates, limon, kekik, marul, 1 ys zeytinyağı",
+  h:"Patatesi 15 dk önce fırına at, somonu ekleyip 12-14 dk daha pişir."},
+ {id:"kofte",n:"Yağsız dana köfte + fırın sebze + bulgur",s:2,k:620,p:45,c:55,f:20,pre:true,
+  i:"180 g yağsız dana kıyma, soğan, 60 g bulgur, kabak, biber, patlıcan",
+  h:"Köfteleri yoğurup fırında pişir. Harcı buzlukta bekletebilirsin."},
+ {id:"tavuk-wok",n:"Tavuklu sebzeli wok + esmer pirinç",s:2,k:590,p:46,c:65,f:12,pre:true,
+  i:"180 g tavuk, brokoli, biber, havuç, 60 g esmer pirinç, soya sosu, zencefil",
+  h:"Yüksek ateşte 6-7 dk sotele. Sebzeleri akşamdan doğra."},
+ {id:"kuru-fasulye",n:"Kuru fasulye + pilav + yoğurt",s:2,k:600,p:36,c:88,f:12,pre:true,
+  i:"180 g haşlanmış kuru fasulye, 80 g kıyma, 60 g pirinç, 200 g yoğurt, turşu",
+  h:"Proteini tutturmak için kıymalı yap, yoğurdu ihmal etme."},
+ {id:"ton-makarna",n:"Ton balıklı tam buğday makarna salatası",s:2,k:580,p:42,c:66,f:14,pre:true,
+  i:"80 g (çiğ) tam buğday makarna, 2 kutu suda ton, mısır, biber, maydanoz, limon",
+  h:"Soğuk servis. Akşamdan yapıp öğlene götürmek için en uygun öğün."},
+ {id:"hindi-kisir",n:"Hindi şiş + kısır + yeşillik",s:2,k:600,p:47,c:60,f:15,pre:true,
+  i:"180 g hindi göğsü, 70 g ince bulgur, salça, maydanoz, nar ekşisi, marul",
+  h:"Hindiyi yoğurtlu baharatta beklet, ızgarada pişir. Kısır 2 gün dayanır."},
 
-function blankSession(w,d){
-  return {date:plannedDate(w,d), done:false, note:"", ex:{}};
-}
-function blankEx(def){
-  return {alt:"", note:"", sets:Array.from({length:def.s},()=>({kg:"",reps:"",rir:""}))};
-}
-function parseSets(str){
-  return str.split("|").map(p=>{
-    const [kg,reps] = p.split("x");
-    return {kg:(kg||"").trim(), reps:(reps||"").trim(), rir:""};
-  });
-}
+ {id:"ispanak",n:"Kıymalı ıspanak + yoğurt + ekmek",s:3,k:540,p:38,c:34,f:26,pre:true,
+  i:"400 g ıspanak, 120 g kıyma, soğan, 200 g yoğurt, 1 dilim ekmek",
+  h:"Kıymayı kavur, ıspanağı ekleyip suyunu çektir."},
+ {id:"levrek",n:"Fırın levrek + zeytinyağlı fasulye + ekmek",s:3,k:530,p:45,c:32,f:22,pre:false,
+  i:"250 g levrek, 200 g taze fasulye, domates, 1 ys zeytinyağı, limon",
+  h:"Balığı 190°C'de 18 dk pişir. Zeytinyağlıyı önceden yap."},
+ {id:"mercimek-tavuk",n:"Mercimek çorbası + ızgara tavuklu salata",s:3,k:550,p:50,c:42,f:16,pre:true,
+  i:"1 kase mercimek çorbası, 150 g tavuk göğsü, marul, domates, mısır, limon",
+  h:"Çorbayı 4 porsiyon pişirip dondur. Tavuğu ızgarada 6-7 dk."},
+ {id:"karniyarik",n:"Fırında karnıyarık + yoğurt",s:3,k:560,p:35,c:40,f:26,pre:true,
+  i:"2 patlıcan, 150 g kıyma, soğan, biber, domates, 200 g yoğurt",
+  h:"Patlıcanı kızartmak yerine fırınla; yağı belirgin düşürür."},
+ {id:"tavuk-sebze",n:"Fırında tavuk + kök sebze + bulgur",s:3,k:560,p:45,c:45,f:18,pre:true,
+  i:"180 g tavuk, havuç, kereviz, soğan, 50 g bulgur, kekik",
+  h:"Tek tepside pişir; aynı tepsiden ertesi günün öğle kabı da çıkar."},
+ {id:"omlet-aksam",n:"Sebzeli peynirli omlet + salata",s:3,k:520,p:36,c:30,f:27,pre:false,
+  i:"3 yumurta, 50 g lor, mantar, ıspanak, domates, 1 dilim ekmek",
+  h:"Hızlı akşam çözümü: 10 dakikada hazır."},
+ {id:"yogurtlu-kofte",n:"Fırın köfte + yoğurtlu semizotu + pirinç",s:3,k:570,p:40,c:48,f:22,pre:true,
+  i:"150 g kıyma, 50 g pirinç, semizotu, 200 g yoğurt, sarımsak",
+  h:"Köfteleri hafta başı pişirip buzdolabında sakla."},
+ {id:"ton-patates",n:"Fırında ton balıklı patates + salata",s:3,k:520,p:40,c:45,f:18,pre:false,
+  i:"300 g patates, 2 kutu suda ton, 50 g lor, dereotu, yeşil salata",
+  h:"Patatesi fırında pişir, ortasını aç, ton + lor karışımını doldur."},
+
+ {id:"shake",n:"Whey + muz + yulaf shake",s:4,k:400,p:40,c:48,f:6,pre:false,
+  i:"1,5 ölçek protein tozu, 1 muz, 30 g yulaf, 250 ml süt veya su",
+  h:"Antrenman çevresi için. Tozu kuru taşı, salonda karıştır."},
+ {id:"yogurt-whey",n:"Yoğurt + whey + bal + ceviz",s:4,k:390,p:38,c:32,f:12,pre:true,
+  i:"250 g süzme yoğurt, 1 ölçek protein tozu, 1 tk bal, 3 ceviz",
+  h:"Akşamdan kavanoza koy."},
+ {id:"ton-sandvic",n:"Ton balıklı tam buğday sandviç",s:4,k:420,p:36,c:42,f:12,pre:true,
+  i:"2 dilim tam buğday ekmek, 1 kutu suda ton, marul, domates, 1 tk light mayonez",
+  h:"Sabah hazırla, öğleden sonraya kadar dayanır."},
+ {id:"cottage",n:"Süzme peynir + meyve + badem",s:4,k:400,p:35,c:30,f:16,pre:true,
+  i:"200 g süzme peynir, 1 elma veya şeftali, 12 badem",
+  h:"Hazırlık gerektirmeyen en pratik ara öğün."},
+ {id:"yumurta-ayran",n:"3 haşlanmış yumurta + ayran + meyve",s:4,k:390,p:32,c:30,f:17,pre:true,
+  i:"3 yumurta, 300 ml ayran, 1 meyve",
+  h:"Haftada bir 10 yumurta haşla, dolapta kabuklu dursun."},
+ {id:"tavuk-durum",n:"Küçük tavuklu dürüm + ayran",s:4,k:430,p:38,c:40,f:13,pre:true,
+  i:"120 g tavuk, 1 küçük tam buğday lavaş, marul, domates, yoğurtlu sos, ayran",
+  h:"Pişmiş tavuğu akşamdan doğra, sabah dürümü sar."},
+ {id:"lor-galeta",n:"Lor + yulaf galeta + yeşillik",s:4,k:380,p:34,c:34,f:12,pre:true,
+  i:"200 g lor, 4 yulaf galeta, dereotu, salatalık",
+  h:"Akşam geç acıkmalarda ağır gelmeyen seçenek."}
+];
+const POOL=s=>RECIPES.filter(r=>r.s===s);
+const SLOTS_T=[{s:1,label:"1. Öğün — kahvaltı"},{s:2,label:"2. Öğün — ana öğün"},
+  {s:4,label:"3. Öğün — antrenman çevresi"},{s:3,label:"4. Öğün — akşam"}];
+const SLOTS_R=[{s:1,label:"1. Öğün — kahvaltı"},{s:2,label:"2. Öğün — ana öğün"},{s:3,label:"3. Öğün — akşam"}];
+
+const CARDIO={
+  out:{n:"Dışarıda yürüyüş",f:["dur","dist","hr","kcal"]},
+  tread:{n:"Koşu bandı (içeride)",f:["dur","dist","inc","spd","hr","kcal"]},
+  bike:{n:"Bisiklet (salon)",f:["dur","dist","lvl","rpm","hr","kcal"]},
+  elip:{n:"Eliptik",f:["dur","lvl","hr","kcal"]},
+  other:{n:"Diğer",f:["dur","hr","kcal"]}};
+const FIELD={dur:["Süre","dk"],dist:["Mesafe","km"],inc:["Eğim","%"],spd:["Hız","km/sa"],
+  lvl:["Zorluk","seviye"],rpm:["Kadans","rpm"],hr:["Ort. nabız","bpm"],kcal:["Yakılan","kcal"]};
+
+/* ===== STATE ===== */
+let S=null, tab="blok", curWeek=1, curKey=null, curDay=null, scopeAll=false;
+const DEF_CFG={start:DEF_START,kcalT:2000,kcalR:1800,protMin:140,protMax:180,
+  key:"",model:"claude-sonnet-5-5",baseWeight:"",baseWaist:""};
+
+function startD(){ return (S&&S.cfg&&S.cfg.start)||DEF_START; }
+function setsFor(def,w){ return w===DELOAD?Math.max(1,Math.ceil(def.s/2)):def.s; }
+function blankSet(){ return {kg:"",reps:"",repsR:"",rir:""}; }
+function blankEx(def,w){ return {alt:"",note:"",sets:Array.from({length:setsFor(def,w)},blankSet)}; }
+function blankSession(w,d){ return {date:plannedDate(w,d),done:false,note:"",ex:{}}; }
+function blankMeal(){ return {n:"",kcal:"",p:"",c:"",f:""}; }
+function blankDay(){ return {meals:[],cardio:[],note:"",sleep:"",energy:"",pain:""}; }
+
 function freshState(){
-  const st = {v:1, start:START, sessions:{}, weeks:{}};
+  const st={v:3,cfg:Object.assign({},DEF_CFG),sessions:{},weeks:{},days:{}};
+  S=st;
   for(let w=1;w<=WEEKS;w++){
-    st.weeks[w] = {weight:"", waist:"", note:""};
-    for(let d=1;d<=4;d++) st.sessions[w+"-"+d] = blankSession(w,d);
+    st.weeks[w]={weight:"",waist:"",note:""};
+    for(let d=1;d<=4;d++) st.sessions[w+"-"+d]=blankSession(w,d);
   }
-  for(const key in SEED){
-    const seed = SEED[key], sess = st.sessions[key], day = PROGRAM[+key.split("-")[1]-1];
-    sess.date = seed.date; sess.done = seed.done;
-    for(const def of day.ex){
-      const raw = seed.ex[def.k];
-      if(!raw) continue;
-      const e = blankEx(def);
-      if(typeof raw === "string"){ e.sets = parseSets(raw); }
-      else { e.sets = parseSets(raw.sets); e.alt = raw.alt||""; e.note = raw.note||""; }
-      sess.ex[def.k] = e;
+  // önceki bloğun son ölçümünü referans olarak taşı
+  try{
+    const old=JSON.parse(localStorage.getItem(OLDKEY)||"null");
+    if(old&&old.weeks){
+      for(let w=8;w>=1;w--){
+        const k=old.weeks[w]; if(!k) continue;
+        if(!st.cfg.baseWeight&&k.weight) st.cfg.baseWeight=k.weight;
+        if(!st.cfg.baseWaist&&k.waist) st.cfg.baseWaist=k.waist;
+        if(st.cfg.baseWeight&&st.cfg.baseWaist) break;
+      }
     }
-  }
+  }catch(e){}
   return st;
 }
 function load(){
   try{
-    const raw = localStorage.getItem(KEY);
-    if(raw){ S = JSON.parse(raw);
+    const raw=localStorage.getItem(KEY);
+    if(raw){
+      S=JSON.parse(raw);
+      S.cfg=Object.assign({},DEF_CFG,S.cfg||{});
+      if(!S.days) S.days={};
       for(let w=1;w<=WEEKS;w++){
         if(!S.weeks[w]) S.weeks[w]={weight:"",waist:"",note:""};
         for(let d=1;d<=4;d++) if(!S.sessions[w+"-"+d]) S.sessions[w+"-"+d]=blankSession(w,d);
       }
-      return;
+      S.v=3; return;
     }
   }catch(e){}
-  S = freshState(); save();
+  S=freshState(); save();
 }
 let saveT=null;
 function save(){
   clearTimeout(saveT);
-  saveT = setTimeout(()=>{ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){ toast("Kaydedilemedi: depolama dolu"); } },250);
+  saveT=setTimeout(()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }
+    catch(e){ toast("Kaydedilemedi: depolama dolu"); } },250);
 }
 
-/* ---------- YARDIMCI ---------- */
-const TR_MONTH = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-const TR_DAY = ["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
+/* ===== YARDIMCI ===== */
+const TR_MONTH=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+const TR_DAY=["Pazar","Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi"];
+const TR_DAY_S=["Paz","Pzt","Sal","Çar","Per","Cum","Cmt"];
 function iso(dt){ return dt.toISOString().slice(0,10); }
-function plannedDate(w,d){
-  const base = new Date(START+"T12:00:00");
-  base.setDate(base.getDate() + (w-1)*7 + DAY_OFFSET[d-1]);
-  return iso(base);
+function addDays(d,n){ const x=new Date(d+"T12:00:00"); x.setDate(x.getDate()+n); return iso(x); }
+function dayDiff(a,b){ return Math.round((new Date(b+"T12:00:00")-new Date(a+"T12:00:00"))/86400000); }
+function plannedDate(w,d){ return addDays(startD(),(w-1)*7+DAY_OFFSET[d-1]); }
+function fmt(ds,long){ if(!ds) return "—"; const dt=new Date(ds+"T12:00:00");
+  return dt.getDate()+" "+TR_MONTH[dt.getMonth()]+(long?" "+TR_DAY_S[dt.getDay()]:""); }
+function num(x){ const v=parseFloat(String(x).replace(",",".")); return isFinite(v)?v:0; }
+function weekOf(ds){ return Math.floor(dayDiff(startD(),ds)/7)+1; }
+function clampDay(ds){ const i=dayDiff(startD(),ds);
+  if(i<0) return startD(); if(i>WEEKS*7-1) return addDays(startD(),WEEKS*7-1); return ds; }
+function sessionOn(ds){
+  for(let w=1;w<=WEEKS;w++) for(let d=1;d<=4;d++){ const s=S.sessions[w+"-"+d]; if(s.date===ds) return {w,d,s}; }
+  return null;
 }
-function fmt(dstr,long){
-  if(!dstr) return "—";
-  const dt = new Date(dstr+"T12:00:00");
-  return dt.getDate()+" "+TR_MONTH[dt.getMonth()]+(long?" "+TR_DAY[dt.getDay()]:"");
-}
-function num(x){ const v = parseFloat(String(x).replace(",",".")); return isFinite(v)?v:0; }
-function hasData(sess){
-  return Object.values(sess.ex||{}).some(e=>e.sets.some(s=>s.kg!=="" || s.reps!==""));
-}
+function hasData(sess){ return Object.values(sess.ex||{}).some(e=>e.sets.some(s=>s.kg!==""||s.reps!=="")); }
+function repsOf(s){ return num(s.reps)+(s.repsR!==""?num(s.repsR):0) || num(s.reps); }
 function tonnage(sess){
   let t=0;
   for(const k in sess.ex) for(const s of sess.ex[k].sets){
-    const kg=num(s.kg), r=num(s.reps);
-    if(kg>0 && r>0) t += kg*r;
+    const kg=num(s.kg); const r=num(s.reps)+num(s.repsR);
+    if(kg>0&&r>0) t+=kg*r;
   }
   return Math.round(t);
 }
-function weekTonnage(w){
-  let t=0; for(let d=1;d<=4;d++) t += tonnage(S.sessions[w+"-"+d]); return t;
+function weekTonnage(w){ let t=0; for(let d=1;d<=4;d++) t+=tonnage(S.sessions[w+"-"+d]); return t; }
+function e1rm(kg,reps){ return (kg>0&&reps>0)?Math.round(kg*(1+reps/30)):0; }
+function exName(def,e){ return (e&&e.alt)?e.alt:def.n; }
+function unitLabel(def){ return def.u==="sn"?"saniye":(def.u==="bw"?"ek kg":(def.u==="el"?"kg/el":"kg")); }
+function setStr(s,uni){
+  if(s.kg===""&&s.reps===""&&s.repsR==="") return null;
+  const w=s.kg===""?"":s.kg+"×";
+  const r=uni?((s.reps||"?")+"/"+(s.repsR||"?")):(s.reps||"?");
+  return w+r+(s.rir!==""?" @"+s.rir:"");
 }
-function e1rm(kg,reps){ return (kg>0&&reps>0)? Math.round(kg*(1+reps/30)) : 0; }
-function defOf(d,k){ return PROGRAM[d-1].ex.find(e=>e.k===k); }
-function exName(def,e){ return (e&&e.alt)? e.alt : def.n; }
-function setStr(s){
-  if(s.kg==="" && s.reps==="") return null;
-  const kg = s.kg===""? "" : s.kg+"×";
-  return kg + (s.reps||"?") + (s.rir!==""? " @"+s.rir : "");
-}
-function lastPerf(k, beforeW, beforeD){
-  for(let w=beforeW; w>=1; w--){
-    for(let d=4; d>=1; d--){
-      if(w===beforeW && d>=beforeD) continue;
-      const sess = S.sessions[w+"-"+d], e = sess.ex[k];
-      if(e && e.sets.some(s=>s.kg!==""||s.reps!=="")){
-        return {w,d,e,date:sess.date};
-      }
-    }
+function topReps(def){ const m=String(def.r).match(/(\d+)(?!.*\d)/); return m?+m[1]:0; }
+function minRir(def){ const m=String(def.rir||"").match(/\d+/); return m?+m[0]:null; }
+function lastPerf(k,bw,bd){
+  for(let w=bw;w>=1;w--) for(let d=4;d>=1;d--){
+    if(w===bw&&d>=bd) continue;
+    const sess=S.sessions[w+"-"+d], e=sess.ex[k];
+    if(e&&e.sets.some(s=>s.kg!==""||s.reps!=="")) return {w,d,e,date:sess.date};
   }
   return null;
+}
+function shouldProgress(def,e){
+  if(!e) return false;
+  const top=topReps(def), mr=minRir(def);
+  const used=e.sets.filter(s=>s.reps!==""||s.repsR!=="");
+  if(!used.length||!top) return false;
+  return used.every(s=>{
+    const okReps=num(s.reps)>=top && (!def.uni || s.repsR==="" || num(s.repsR)>=top);
+    const okRir=(s.rir===""||mr===null)?true:num(s.rir)>=mr;
+    return okReps&&okRir;
+  });
 }
 function nextSession(){
-  for(let w=1;w<=WEEKS;w++) for(let d=1;d<=4;d++){
-    const s = S.sessions[w+"-"+d];
-    if(!s.done) return {w,d,s};
-  }
+  for(let w=1;w<=WEEKS;w++) for(let d=1;d<=4;d++){ const s=S.sessions[w+"-"+d]; if(!s.done) return {w,d,s}; }
   return null;
 }
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg; t.classList.add("on");
-  setTimeout(()=>t.classList.remove("on"), 1700);
+function esc(v){ return String(v==null?"":v).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("on");
+  setTimeout(()=>t.classList.remove("on"),1700); }
+
+function slotsFor(ds){ return sessionOn(ds)?SLOTS_T:SLOTS_R; }
+function getDay(ds){
+  if(!S.days[ds]) S.days[ds]=blankDay();
+  const day=S.days[ds];
+  if(!day.meals) day.meals=[]; if(!day.cardio) day.cardio=[];
+  const need=slotsFor(ds).length;
+  while(day.meals.length<need) day.meals.push(blankMeal());
+  while(day.meals.length>need){
+    const last=day.meals[day.meals.length-1];
+    if(last.n||last.kcal||last.p) break;
+    day.meals.pop();
+  }
+  return day;
+}
+function dayTotals(ds){
+  const day=S.days[ds], t={kcal:0,p:0,c:0,f:0,cmin:0,ckm:0};
+  if(!day) return t;
+  (day.meals||[]).forEach(m=>{ t.kcal+=num(m.kcal); t.p+=num(m.p); t.c+=num(m.c); t.f+=num(m.f); });
+  (day.cardio||[]).forEach(c=>{ t.cmin+=num(c.dur); t.ckm+=num(c.dist); });
+  return t;
+}
+function targetFor(ds){ return sessionOn(ds)?num(S.cfg.kcalT):num(S.cfg.kcalR); }
+function suggest(ds,slot){
+  const i=Math.max(0,dayDiff(startD(),ds)), wk=Math.floor(i/7), pool=POOL(slot);
+  if(!pool.length) return null;
+  const stride={1:1,2:3,3:5,4:1}[slot];
+  return pool[((i*stride)+wk*2)%pool.length];
 }
 
-/* ---------- BLOK EKRANI ---------- */
+/* ===== BLOK ===== */
 function renderBlok(){
-  const nx = nextSession();
-  document.getElementById("blokMeta").textContent =
-    Object.keys(S.sessions).filter(k=>S.sessions[k].done).length + "/32 antrenman";
-
-  // hafta şeridi
-  const strip = document.getElementById("weekStrip");
-  strip.innerHTML = "";
-  for(let w=1; w<=WEEKS; w++){
-    const done = [1,2,3,4].filter(d=>S.sessions[w+"-"+d].done).length;
-    const b = document.createElement("button");
-    b.className = "wk" + (w===curWeek?" on":"") + (done===4?" full":"");
-    b.innerHTML = "<b>"+w+"</b><span>"+done+"/4</span>";
-    b.onclick = ()=>{ curWeek=w; renderBlok(); };
+  const nx=nextSession();
+  document.getElementById("blokMeta").textContent=
+    Object.keys(S.sessions).filter(k=>S.sessions[k].done).length+"/32 antrenman";
+  const strip=document.getElementById("weekStrip"); strip.innerHTML="";
+  for(let w=1;w<=WEEKS;w++){
+    const done=[1,2,3,4].filter(d=>S.sessions[w+"-"+d].done).length;
+    const b=document.createElement("button");
+    b.className="wk"+(w===curWeek?" on":"")+(done===4?" full":"")+(w===DELOAD?" dl":"");
+    b.innerHTML="<b>"+w+"</b><span>"+done+"/4</span>";
+    b.onclick=()=>{curWeek=w;renderBlok();renderOlcum();renderRapor();};
     strip.appendChild(b);
   }
-
-  // hero
-  const hero = document.getElementById("heroSlot");
+  const hero=document.getElementById("heroSlot");
   if(nx){
-    const day = PROGRAM[nx.d-1];
-    const lines = day.ex.slice(0,4).map(def=>{
-      const lp = lastPerf(def.k, nx.w, nx.d);
-      const best = lp ? lp.e.sets.map(setStr).filter(Boolean).slice(-1)[0] : null;
-      return def.n + " — <i>" + (best ? best : "kayıt yok") + "</i>";
+    const day=PROGRAM[nx.d-1];
+    const lines=day.ex.slice(0,4).map(def=>{
+      const lp=lastPerf(def.k,nx.w,nx.d);
+      const best=lp?lp.e.sets.map(s=>setStr(s,def.uni)).filter(Boolean).slice(-1)[0]:null;
+      return def.n+" — <i>"+(best?best:(def.st?"başlangıç "+def.st:"kayıt yok"))+"</i>";
     }).join("<br>");
-    hero.innerHTML =
-      '<div class="hero"><div class="kick">Sıradaki · Hafta '+nx.w+'</div>'+
-      '<h2>Gün '+nx.d+' — '+day.title+'</h2>'+
-      '<div class="when">'+day.focus+' · '+fmt(nx.s.date,true)+'</div>'+
+    hero.innerHTML='<div class="hero"><div class="kick">Sıradaki · Hafta '+nx.w+' · '+PHASE[nx.w]+'</div>'+
+      '<h2>'+day.title+' — '+day.focus+'</h2>'+
+      '<div class="when">'+fmt(nx.s.date,true)+(nx.w===DELOAD?' · deload, setler yarıya indi':'')+'</div>'+
       '<div class="prev">Geçen sefer:<br>'+lines+'</div>'+
       '<button class="go">Antrenmanı aç</button></div>';
-    hero.querySelector(".go").onclick = ()=>openSession(nx.w, nx.d);
+    hero.querySelector(".go").onclick=()=>openSession(nx.w,nx.d);
   } else {
-    hero.innerHTML = '<div class="hero"><div class="kick">Blok tamam</div><h2>8 hafta bitti</h2>'+
-      '<div class="when">Raporu al, yeni blok için koçla konuş.</div></div>';
+    hero.innerHTML='<div class="hero"><div class="kick">Blok tamam</div><h2>8 hafta bitti</h2>'+
+      '<div class="when">Raporu al, yeni blok için koçla konuş. Maksimum deneme yapma.</div></div>';
   }
-
-  document.getElementById("weekLabel").textContent =
-    "Hafta "+curWeek+" · "+fmt(S.sessions[curWeek+"-1"].date)+" – "+fmt(S.sessions[curWeek+"-4"].date)+" · "+weekTonnage(curWeek).toLocaleString("tr-TR")+" kg tonaj";
-
-  const rows = document.getElementById("sessionRows");
-  rows.innerHTML = "";
-  for(let d=1; d<=4; d++){
-    const sess = S.sessions[curWeek+"-"+d], day = PROGRAM[d-1];
-    const isNext = nx && nx.w===curWeek && nx.d===d;
-    const btn = document.createElement("button");
-    btn.className = "row" + (sess.done?" done":"") + (isNext?" next":"");
-    const sub = sess.done ? (tonnage(sess).toLocaleString("tr-TR")+" kg · "+day.ex.length+" hareket")
-              : (hasData(sess) ? "yarım kaldı" : day.ex.map(e=>e.n).slice(0,3).join(", "));
-    btn.innerHTML = '<span class="bar'+(day.focus==="Hipertrofi"?" h":"")+'"></span>'+
-      '<span class="body"><span class="t"><b>Gün '+d+' — '+day.title+' ('+day.focus+')</b>'+
-      '<span class="d">'+fmt(sess.date)+'</span></span>'+
-      '<span class="sub">'+sub+'</span></span>';
-    btn.onclick = ()=>openSession(curWeek,d);
+  document.getElementById("weekLabel").textContent=
+    "Hafta "+curWeek+" · "+PHASE[curWeek]+" · "+fmt(S.sessions[curWeek+"-1"].date)+" – "+
+    fmt(S.sessions[curWeek+"-4"].date)+" · "+weekTonnage(curWeek).toLocaleString("tr-TR")+" kg";
+  const rows=document.getElementById("sessionRows"); rows.innerHTML="";
+  for(let d=1;d<=4;d++){
+    const sess=S.sessions[curWeek+"-"+d], day=PROGRAM[d-1];
+    const isNext=nx&&nx.w===curWeek&&nx.d===d;
+    const btn=document.createElement("button");
+    btn.className="row"+(sess.done?" done":"")+(isNext?" next":"");
+    const sub=sess.done?(tonnage(sess).toLocaleString("tr-TR")+" kg · "+day.ex.length+" hareket")
+      :(hasData(sess)?"yarım kaldı":day.ex.map(e=>e.n).slice(0,3).join(", "));
+    btn.innerHTML='<span class="bar'+(day.focus==="Hipertrofi"?" h":"")+'"></span>'+
+      '<span class="body"><span class="t"><b>'+day.title+' — '+day.focus+'</b>'+
+      '<span class="d">'+fmt(sess.date,true)+'</span></span><span class="sub">'+sub+'</span></span>';
+    btn.onclick=()=>openSession(curWeek,d);
     rows.appendChild(btn);
   }
 }
 
-/* ---------- SEANS ---------- */
+/* ===== SEANS ===== */
 function openSession(w,d){
-  curKey = w+"-"+d;
-  const sess = S.sessions[curKey], day = PROGRAM[d-1];
-  document.getElementById("shTitle").textContent = "Gün "+d+" — "+day.title;
-  const tg = document.getElementById("shTag");
-  tg.textContent = "Hafta "+w+" · "+day.focus;
-  tg.className = "tag " + (day.focus==="Güç"?"s":"h");
-  const dateIn = document.getElementById("shDate");
-  dateIn.value = sess.date;
-  dateIn.oninput = ()=>{ sess.date = dateIn.value; save(); };
-  const note = document.getElementById("shNote");
-  note.value = sess.note||"";
-  note.oninput = ()=>{ sess.note = note.value; save(); };
+  curKey=w+"-"+d;
+  const sess=S.sessions[curKey], day=PROGRAM[d-1];
+  document.getElementById("shTitle").textContent=day.title+" — "+day.focus;
+  const tg=document.getElementById("shTag");
+  tg.textContent="Hafta "+w+" · "+PHASE[w];
+  tg.className="tag "+(day.focus==="Güç"?"s":"h");
+  document.getElementById("shDl").style.display=(w===DELOAD)?"inline-block":"none";
+  document.getElementById("shDayNote").textContent=
+    (w===DELOAD?"Deload: setler yarıya indi, RIR 4 civarında kal, failure yok. ":"")+(day.note||"");
+  const di=document.getElementById("shDate");
+  di.value=sess.date; di.oninput=()=>{ sess.date=di.value; save(); };
+  const nt=document.getElementById("shNote");
+  nt.value=sess.note||""; nt.oninput=()=>{ sess.note=nt.value; save(); };
   renderExercises();
-  document.getElementById("btnFinish").textContent = sess.done ? "Tamamlandı ✓ (geri al)" : "Antrenmanı tamamla";
+  document.getElementById("btnFinish").textContent=sess.done?"Tamamlandı ✓ (geri al)":"Antrenmanı tamamla";
   document.getElementById("sheet").classList.add("on");
   document.getElementById("finishBar").classList.add("on");
-  window.scrollTo(0,0);
-  document.getElementById("sheet").scrollTop = 0;
+  window.scrollTo(0,0); document.getElementById("sheet").scrollTop=0;
 }
 function closeSession(){
   document.getElementById("sheet").classList.remove("on");
   document.getElementById("finishBar").classList.remove("on");
-  curKey = null; renderBlok(); renderOlcum(); renderRapor();
+  curKey=null; renderBlok(); renderGun(); renderOlcum(); renderRapor();
 }
 function renderExercises(){
-  const [w,d] = curKey.split("-").map(Number);
-  const sess = S.sessions[curKey], day = PROGRAM[d-1];
-  const wrap = document.getElementById("exList");
-  wrap.innerHTML = "";
-  document.getElementById("shStat").textContent = tonnage(sess).toLocaleString("tr-TR")+" kg tonaj";
-
+  const p=curKey.split("-"), w=+p[0], d=+p[1];
+  const sess=S.sessions[curKey], day=PROGRAM[d-1];
+  const wrap=document.getElementById("exList"); wrap.innerHTML="";
+  document.getElementById("shStat").textContent=tonnage(sess).toLocaleString("tr-TR")+" kg tonaj";
   day.ex.forEach(def=>{
-    if(!sess.ex[def.k]) sess.ex[def.k] = blankEx(def);
-    const e = sess.ex[def.k];
-    const lp = lastPerf(def.k, w, d);
-    const lastTxt = lp
-      ? fmt(lp.date)+": "+lp.e.sets.map(setStr).filter(Boolean).join(" · ")
-      : "ilk kez";
-
-    const card = document.createElement("div");
-    card.className = "ex";
-    const unitLbl = def.u==="sn" ? "saniye" : (def.u==="bw" ? "ek kg" : "kg");
-    card.innerHTML =
-      '<header><div class="name"><b>'+exName(def,e)+'</b><span class="target">hedef '+def.s+'×'+def.r+'</span></div>'+
-      '<div class="last">Geçen: <i>'+lastTxt+'</i></div></header>'+
-      '<div class="grid head"><span>#</span><span>'+unitLbl+'</span><span>'+(def.u==="sn"?"saniye":"tekrar")+'</span><span>RIR</span><span></span></div>'+
+    if(!sess.ex[def.k]) sess.ex[def.k]=blankEx(def,w);
+    const e=sess.ex[def.k], lp=lastPerf(def.k,w,d);
+    const lastTxt=lp?(fmt(lp.date)+": "+lp.e.sets.map(s=>setStr(s,def.uni)).filter(Boolean).join(" · "))
+      :(def.st?"başlangıç önerisi "+def.st:"ilk kez");
+    const prog=lp&&shouldProgress(def,lp.e)&&w!==DELOAD;
+    const card=document.createElement("div"); card.className="ex";
+    const heads=def.uni
+      ? ['#',unitLabel(def),'sol','sağ','RIR','']
+      : ['#',unitLabel(def),(def.u==="sn"?"saniye":"tekrar"),'RIR',''];
+    card.innerHTML='<header><div class="name"><b>'+esc(exName(def,e))+'</b>'+
+      '<span class="target">'+setsFor(def,w)+'×'+def.r+' · RIR '+(w===DELOAD?"4":def.rir)+'</span></div>'+
+      '<div class="last">Geçen: <i>'+esc(lastTxt)+'</i></div>'+
+      (def.tip?'<div class="tip">'+esc(def.tip)+'</div>':'')+
+      (prog?'<div><span class="up">↑ ağırlığı artır</span></div>':'')+'</header>'+
+      '<div class="grid head'+(def.uni?" uni":"")+'">'+heads.map(h=>'<span>'+h+'</span>').join("")+'</div>'+
       '<div class="sets"></div>'+
       '<div class="exfoot"><button class="chip" data-a="add">+ set</button>'+
       '<button class="chip" data-a="prev">geçen seferi doldur</button>'+
-      '<button class="chip'+((e.alt||e.note)?" act":"")+'" data-a="alt">hareket / not</button></div>'+
+      '<button class="chip'+((e.alt||e.note)?" act":"")+'" data-a="alt">makine / not</button></div>'+
       '<div class="exnote" style="display:'+((e.alt||e.note)?"block":"none")+'">'+
-      '<input data-f="alt" placeholder="Farklı hareket yaptıysan adı" value="'+esc(e.alt)+'">'+
+      '<input data-f="alt" placeholder="Farklı makine/hareket yaptıysan adı" value="'+esc(e.alt)+'">'+
       '<div style="height:8px"></div>'+
-      '<input data-f="note" placeholder="Not (ör. her el 15 kg, makine no)" value="'+esc(e.note)+'"></div>';
-
-    const setsBox = card.querySelector(".sets");
-    const drawSets = ()=>{
-      setsBox.innerHTML = "";
+      '<input data-f="note" placeholder="Not (makine no, koltuk ayarı)" value="'+esc(e.note)+'"></div>';
+    const setsBox=card.querySelector(".sets");
+    const drawSets=()=>{
+      setsBox.innerHTML="";
       e.sets.forEach((s,i)=>{
-        const row = document.createElement("div");
-        row.className = "grid setrow";
-        row.innerHTML = '<span class="n">'+(i+1)+'</span>'+
-          '<input inputmode="decimal" data-i="'+i+'" data-f="kg"   value="'+esc(s.kg)+'" placeholder="–" aria-label="Set '+(i+1)+' ağırlık">'+
-          '<input inputmode="numeric" data-i="'+i+'" data-f="reps" value="'+esc(s.reps)+'" placeholder="–" aria-label="Set '+(i+1)+' tekrar">'+
-          '<input inputmode="numeric" data-i="'+i+'" data-f="rir"  value="'+esc(s.rir)+'" placeholder="–" aria-label="Set '+(i+1)+' RIR">'+
+        const row=document.createElement("div"); row.className="grid setrow"+(def.uni?" uni":"");
+        let html='<span class="n">'+(i+1)+'</span>'+
+          '<input inputmode="decimal" data-i="'+i+'" data-f="kg" value="'+esc(s.kg)+'" placeholder="–" aria-label="Set '+(i+1)+' ağırlık">'+
+          '<input inputmode="numeric" data-i="'+i+'" data-f="reps" value="'+esc(s.reps)+'" placeholder="–" aria-label="Set '+(i+1)+(def.uni?" sol":"")+' tekrar">';
+        if(def.uni) html+='<input inputmode="numeric" data-i="'+i+'" data-f="repsR" value="'+esc(s.repsR||"")+'" placeholder="–" aria-label="Set '+(i+1)+' sağ tekrar">';
+        html+='<input inputmode="numeric" data-i="'+i+'" data-f="rir" value="'+esc(s.rir)+'" placeholder="–" aria-label="Set '+(i+1)+' RIR">'+
           '<button class="del" data-i="'+i+'" aria-label="Seti sil">×</button>';
+        row.innerHTML=html;
         row.querySelectorAll("input").forEach(inp=>{
           if(inp.value!=="") inp.classList.add("filled");
-          inp.oninput = ()=>{
-            e.sets[inp.dataset.i][inp.dataset.f] = inp.value.replace(",",".");
-            inp.classList.toggle("filled", inp.value!=="");
+          inp.oninput=()=>{
+            e.sets[inp.dataset.i][inp.dataset.f]=inp.value.replace(",",".");
+            inp.classList.toggle("filled",inp.value!=="");
             save();
-            document.getElementById("shStat").textContent = tonnage(sess).toLocaleString("tr-TR")+" kg tonaj";
+            document.getElementById("shStat").textContent=tonnage(sess).toLocaleString("tr-TR")+" kg tonaj";
           };
         });
-        row.querySelector(".del").onclick = ()=>{
-          if(e.sets.length<=1) return;
-          e.sets.splice(i,1); save(); drawSets();
-        };
+        row.querySelector(".del").onclick=()=>{ if(e.sets.length<=1) return; e.sets.splice(i,1); save(); drawSets(); };
         setsBox.appendChild(row);
       });
     };
     drawSets();
-
     card.querySelectorAll(".exfoot .chip").forEach(b=>{
-      b.onclick = ()=>{
-        const a = b.dataset.a;
-        if(a==="add"){ e.sets.push({kg:"",reps:"",rir:""}); save(); drawSets(); }
+      b.onclick=()=>{
+        const a=b.dataset.a;
+        if(a==="add"){ e.sets.push(blankSet()); save(); drawSets(); }
         if(a==="prev"){
           if(!lp){ toast("Önceki kayıt yok"); return; }
-          e.sets = lp.e.sets.map(s=>({kg:s.kg, reps:s.reps, rir:""}));
+          e.sets=lp.e.sets.map(s=>({kg:s.kg,reps:s.reps,repsR:s.repsR||"",rir:""}));
           save(); drawSets(); toast("Geçen seferki yüklendi");
         }
-        if(a==="alt"){
-          const box = card.querySelector(".exnote");
-          box.style.display = box.style.display==="none" ? "block" : "none";
-        }
+        if(a==="alt"){ const box=card.querySelector(".exnote");
+          box.style.display=box.style.display==="none"?"block":"none"; }
       };
     });
-    card.querySelectorAll('.exnote input').forEach(inp=>{
-      inp.oninput = ()=>{
-        e[inp.dataset.f] = inp.value; save();
-        card.querySelector(".name b").textContent = exName(def,e);
-      };
+    card.querySelectorAll(".exnote input").forEach(inp=>{
+      inp.oninput=()=>{ e[inp.dataset.f]=inp.value; save();
+        card.querySelector(".name b").textContent=exName(def,e); };
     });
     wrap.appendChild(card);
   });
 }
-function esc(v){ return String(v==null?"":v).replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
 
-/* ---------- ÖLÇÜM ---------- */
+/* ===== GÜN ===== */
+function renderGun(){
+  if(!curDay) curDay=clampDay(iso(new Date()));
+  const ds=curDay, sess=sessionOn(ds), day=getDay(ds), slots=slotsFor(ds);
+  const dt=new Date(ds+"T12:00:00");
+  document.getElementById("dLabel").textContent=fmt(ds)+" "+TR_DAY[dt.getDay()];
+  document.getElementById("dSub").textContent="Hafta "+weekOf(ds)+" · "+PHASE[weekOf(ds)]+
+    (sess?" · "+PROGRAM[sess.d-1].title:" · dinlenme");
+  document.getElementById("gunMeta").textContent=ds===iso(new Date())?"bugün":"";
+
+  const t=dayTotals(ds), tgt=targetFor(ds), pmin=num(S.cfg.protMin), pmax=num(S.cfg.protMax);
+  const inRange=t.p>=pmin&&t.p<=pmax;
+  let head='<div class="kpi"><span>Kalori</span><span><b>'+Math.round(t.kcal)+'</b> / '+tgt+' kcal</span></div>'+
+    '<div class="meter'+(t.kcal>tgt*1.1?" over":"")+'"><i style="width:'+Math.min(100,Math.round(t.kcal/(tgt||1)*100))+'%"></i></div>'+
+    '<div style="height:12px"></div>'+
+    '<div class="kpi"><span>Protein'+(inRange?" ✓":"")+'</span><span><b>'+Math.round(t.p)+'</b> / '+pmin+'–'+pmax+' g</span></div>'+
+    '<div class="meter p"><i style="width:'+Math.min(100,Math.round(t.p/(pmin||1)*100))+'%"></i></div>'+
+    '<p class="small muted" style="margin:12px 0 0">Karbonhidrat '+Math.round(t.c)+' g · Yağ '+Math.round(t.f)+' g'+
+    (t.cmin?' · Kardiyo '+Math.round(t.cmin)+' dk':'')+'</p>';
+  if(sess) head+='<button class="btn" style="width:100%;margin-top:12px" id="goSess">'+
+    PROGRAM[sess.d-1].title+' antrenmanını aç</button>';
+  document.getElementById("dayTotals").innerHTML=head;
+  if(sess) document.getElementById("goSess").onclick=()=>openSession(sess.w,sess.d);
+
+  const sl=document.getElementById("dSleep"), en=document.getElementById("dEnergy"), pn=document.getElementById("dPain");
+  sl.value=day.sleep||""; en.value=day.energy||""; pn.value=day.pain||"";
+  sl.oninput=()=>{ day.sleep=sl.value.replace(",","."); save(); };
+  en.onchange=()=>{ day.energy=en.value; save(); };
+  pn.onchange=()=>{ day.pain=pn.value; save();
+    if(pn.value==="orta"||pn.value==="şiddetli") toast("Ağrı varsa ilgili hareketi durdur, koça yaz"); };
+
+  const ml=document.getElementById("mealList"); ml.innerHTML="";
+  slots.forEach((slot,i)=>{
+    const m=day.meals[i]||(day.meals[i]=blankMeal());
+    const sug=suggest(ds,slot.s);
+    const box=document.createElement("div"); box.className="meal";
+    box.innerHTML='<header><span class="slot">'+slot.label+'</span><button data-a="pick">tarif seç</button></header>'+
+      '<div class="nm"><input data-f="n" placeholder="'+(sug?esc("Öneri: "+sug.n):"Ne yedin?")+'" value="'+esc(m.n)+'"></div>'+
+      '<div class="macro">'+['kcal','p','c','f'].map(f=>'<div><label>'+
+        ({kcal:"kcal",p:"protein",c:"karb",f:"yağ"})[f]+'</label><input inputmode="decimal" data-f="'+f+
+        '" value="'+esc(m[f])+'" placeholder="–"></div>').join("")+'</div>';
+    box.querySelectorAll("input").forEach(inp=>{
+      if(inp.value!=="") inp.classList.add("filled");
+      inp.oninput=()=>{ m[inp.dataset.f]=inp.value.replace(",","."); inp.classList.toggle("filled",inp.value!==""); save(); refreshTotals(); };
+    });
+    box.querySelector('[data-a="pick"]').onclick=()=>openRecipes(slot.s,ds,i);
+    ml.appendChild(box);
+  });
+
+  const cl=document.getElementById("cardioList"); cl.innerHTML="";
+  if(!day.cardio.length) cl.innerHTML='<div class="card small muted">Kardiyo yok. Yürüyüş, koşu bandı veya bisiklet için + ekle.</div>';
+  day.cardio.forEach((c,idx)=>{
+    const box=document.createElement("div"); box.className="card";
+    const opts=Object.keys(CARDIO).map(k=>'<option value="'+k+'"'+(c.t===k?" selected":"")+'>'+CARDIO[k].n+'</option>').join("");
+    box.innerHTML='<div style="display:flex;gap:10px;align-items:center">'+
+      '<select data-f="t" style="flex:1">'+opts+'</select>'+
+      '<button class="del" data-a="rm" aria-label="Kardiyoyu sil">×</button></div>'+
+      '<div class="two" style="margin-top:10px" data-box="f"></div><div style="height:10px"></div>'+
+      '<input data-f="note" placeholder="Not (rota, hissiyat)" value="'+esc(c.note||"")+'">';
+    const fb=box.querySelector('[data-box="f"]');
+    const drawF=()=>{
+      fb.innerHTML="";
+      CARDIO[c.t||"out"].f.forEach(f=>{
+        const dv=document.createElement("div"); dv.className="field";
+        dv.innerHTML='<label>'+FIELD[f][0]+' ('+FIELD[f][1]+')</label>'+
+          '<input inputmode="decimal" data-f="'+f+'" value="'+esc(c[f]||"")+'" placeholder="–">';
+        const inp=dv.querySelector("input");
+        inp.oninput=()=>{ c[f]=inp.value.replace(",","."); save(); refreshTotals(); };
+        fb.appendChild(dv);
+      });
+    };
+    drawF();
+    box.querySelector('[data-f="t"]').onchange=ev=>{ c.t=ev.target.value; save(); drawF(); };
+    box.querySelector('[data-f="note"]').oninput=ev=>{ c.note=ev.target.value; save(); };
+    box.querySelector('[data-a="rm"]').onclick=()=>{ day.cardio.splice(idx,1); save(); renderGun(); };
+    cl.appendChild(box);
+  });
+
+  const dn=document.getElementById("dayNote");
+  dn.value=day.note||""; dn.oninput=()=>{ day.note=dn.value; save(); };
+}
+function refreshTotals(){
+  const ds=curDay, t=dayTotals(ds), tgt=targetFor(ds), pmin=num(S.cfg.protMin), pmax=num(S.cfg.protMax);
+  const el=document.getElementById("dayTotals"); if(!el) return;
+  const kpis=el.querySelectorAll(".kpi");
+  if(kpis[0]) kpis[0].lastElementChild.innerHTML="<b>"+Math.round(t.kcal)+"</b> / "+tgt+" kcal";
+  if(kpis[1]){
+    kpis[1].firstElementChild.textContent="Protein"+((t.p>=pmin&&t.p<=pmax)?" ✓":"");
+    kpis[1].lastElementChild.innerHTML="<b>"+Math.round(t.p)+"</b> / "+pmin+"–"+pmax+" g";
+  }
+  const ms=el.querySelectorAll(".meter");
+  if(ms[0]){ ms[0].querySelector("i").style.width=Math.min(100,Math.round(t.kcal/(tgt||1)*100))+"%";
+    ms[0].classList.toggle("over",t.kcal>tgt*1.1); }
+  if(ms[1]) ms[1].querySelector("i").style.width=Math.min(100,Math.round(t.p/(pmin||1)*100))+"%";
+  const p=el.querySelector("p.small");
+  if(p) p.textContent="Karbonhidrat "+Math.round(t.c)+" g · Yağ "+Math.round(t.f)+" g"+(t.cmin?" · Kardiyo "+Math.round(t.cmin)+" dk":"");
+}
+
+/* tarifler */
+function recipeCard(r,onPick){
+  const q=encodeURIComponent(r.n+" tarifi");
+  const el=document.createElement("div"); el.className="rec";
+  el.innerHTML='<h4>'+esc(r.n)+'<span class="prep'+(r.pre?" pre":"")+'">'+(r.pre?"akşamdan hazır":"o gün pişir")+'</span></h4>'+
+    '<div class="m">'+r.k+' kcal · P '+r.p+' g · K '+r.c+' g · Y '+r.f+' g</div>'+
+    '<div class="ing">'+esc(r.i)+'</div><div class="how">'+esc(r.h)+'</div>'+
+    '<div class="acts">'+(onPick?'<button class="chip act" data-a="pick">bu öğüne ekle</button>':'')+
+    '<a class="chip" target="_blank" rel="noopener" href="https://www.google.com/search?q='+q+'">tarif ara</a>'+
+    '<a class="chip" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query='+q+'">video</a></div>';
+  if(onPick) el.querySelector('[data-a="pick"]').onclick=()=>onPick(r);
+  return el;
+}
+function openSheet2(title,sub){
+  document.getElementById("s2Title").textContent=title;
+  document.getElementById("s2Sub").textContent=sub||"";
+  document.getElementById("s2Body").innerHTML="";
+  document.getElementById("sheet2").classList.add("on");
+  document.getElementById("sheet2").scrollTop=0;
+  return document.getElementById("s2Body");
+}
+function openRecipes(slot,ds,idx){
+  const body=openSheet2("Tarifler","Seçtiğin tarif öğünün adını ve makrolarını doldurur; porsiyonu değiştirirsen sayıları elle düzelt.");
+  const sug=suggest(ds,slot);
+  if(sug){
+    const h=document.createElement("div"); h.className="sec"; h.innerHTML="<span>Bugünün önerisi</span>";
+    body.appendChild(h); body.appendChild(recipeCard(sug,r=>pickRecipe(r,ds,idx)));
+  }
+  const h2=document.createElement("div"); h2.className="sec"; h2.innerHTML="<span>Diğer seçenekler</span>";
+  body.appendChild(h2);
+  POOL(slot).filter(r=>!sug||r.id!==sug.id).forEach(r=>body.appendChild(recipeCard(r,x=>pickRecipe(x,ds,idx))));
+}
+function pickRecipe(r,ds,idx){
+  const day=getDay(ds), m=day.meals[idx];
+  m.n=r.n; m.kcal=String(r.k); m.p=String(r.p); m.c=String(r.c); m.f=String(r.f);
+  save(); document.getElementById("sheet2").classList.remove("on");
+  renderGun(); toast("Öğün dolduruldu");
+}
+function openMenu(){
+  const w=weekOf(curDay), start=addDays(startD(),(w-1)*7);
+  const body=openSheet2("Hafta "+w+" menüsü","Rotasyon her hafta kayıyor. Akşamdan hazırlanabilenler işaretli.");
+  for(let i=0;i<7;i++){
+    const ds=addDays(start,i), tr=!!sessionOn(ds), dt=new Date(ds+"T12:00:00");
+    const h=document.createElement("div"); h.className="sec";
+    h.innerHTML="<span>"+TR_DAY[dt.getDay()]+" "+fmt(ds)+" · "+(tr?"antrenman, 4 öğün":"dinlenme, 3 öğün")+"</span>";
+    body.appendChild(h);
+    let kcal=0,prot=0;
+    (tr?SLOTS_T:SLOTS_R).forEach(sl=>{ const r=suggest(ds,sl.s); if(r){ kcal+=r.k; prot+=r.p; body.appendChild(recipeCard(r,null)); }});
+    const tot=document.createElement("p"); tot.className="small muted"; tot.style.margin="-2px 0 4px";
+    tot.textContent="Gün toplamı ≈ "+kcal+" kcal · "+prot+" g protein (hedef "+(tr?S.cfg.kcalT:S.cfg.kcalR)+" kcal)";
+    body.appendChild(tot);
+  }
+}
+
+/* ===== HAFTALIK TOPLAMLAR ===== */
+function weekNutrition(w){
+  const start=addDays(startD(),(w-1)*7);
+  let days=0,kcal=0,p=0,c=0,f=0,hit=0,protHit=0,cmin=0,ckm=0,csess=0;
+  let slN=0,slSum=0,enN=0,enSum=0;
+  const cardioLines=[], painDays=[];
+  for(let i=0;i<7;i++){
+    const ds=addDays(start,i), d=S.days[ds]; if(!d) continue;
+    const t=dayTotals(ds);
+    if(t.kcal>0){ days++; kcal+=t.kcal; p+=t.p; c+=t.c; f+=t.f;
+      const tgt=targetFor(ds); if(tgt&&Math.abs(t.kcal-tgt)/tgt<=0.1) hit++;
+      if(t.p>=num(S.cfg.protMin)&&t.p<=num(S.cfg.protMax)) protHit++; }
+    if(d.sleep){ slN++; slSum+=num(d.sleep); }
+    if(d.energy){ enN++; enSum+=num(d.energy); }
+    if(d.pain&&d.pain!=="yok") painDays.push(fmt(ds,true)+": "+d.pain);
+    (d.cardio||[]).forEach(cd=>{
+      if(!num(cd.dur)&&!num(cd.dist)) return;
+      csess++; cmin+=num(cd.dur); ckm+=num(cd.dist);
+      const parts=[CARDIO[cd.t||"out"].n,num(cd.dur)?num(cd.dur)+" dk":null,num(cd.dist)?num(cd.dist)+" km":null,
+        num(cd.inc)?"eğim %"+num(cd.inc):null,num(cd.spd)?num(cd.spd)+" km/sa":null,
+        num(cd.lvl)?"seviye "+num(cd.lvl):null,num(cd.hr)?num(cd.hr)+" bpm":null].filter(Boolean);
+      cardioLines.push(fmt(ds)+": "+parts.join(" · ")+(cd.note?" ("+cd.note+")":""));
+    });
+  }
+  return {days,hit,protHit,cmin,ckm,csess,cardioLines,painDays,
+    avgK:days?Math.round(kcal/days):0, avgP:days?Math.round(p/days):0,
+    avgC:days?Math.round(c/days):0, avgF:days?Math.round(f/days):0,
+    avgSleep:slN?(slSum/slN).toFixed(1):null, avgEnergy:enN?(enSum/enN).toFixed(1):null};
+}
+function sideBalance(w){
+  const out=[];
+  for(let d=1;d<=4;d++){
+    const sess=S.sessions[w+"-"+d];
+    PROGRAM[d-1].ex.filter(x=>x.uni).forEach(def=>{
+      const e=sess.ex[def.k]; if(!e) return;
+      let l=0,r=0,n=0;
+      e.sets.forEach(s=>{ if(s.reps!==""||s.repsR!==""){ l+=num(s.reps); r+=num(s.repsR); n++; } });
+      if(!n) return;
+      out.push({name:exName(def,e),l,r,diff:l-r});
+    });
+  }
+  return out;
+}
+
+/* ===== ÖLÇÜM ===== */
 function renderOlcum(){
-  const wk = S.weeks[curWeek];
-  const wI = document.getElementById("mWeight"), waI = document.getElementById("mWaist"), nI = document.getElementById("mNote");
-  wI.value = wk.weight; waI.value = wk.waist; nI.value = wk.note;
-  wI.oninput = ()=>{ wk.weight = wI.value.replace(",","."); save(); renderDelta(); };
-  waI.oninput = ()=>{ wk.waist = waI.value.replace(",","."); save(); renderDelta(); };
-  nI.oninput  = ()=>{ wk.note  = nI.value; save(); };
+  const wk=S.weeks[curWeek];
+  const wI=document.getElementById("mWeight"), waI=document.getElementById("mWaist"), nI=document.getElementById("mNote");
+  wI.value=wk.weight; waI.value=wk.waist; nI.value=wk.note;
+  wI.oninput=()=>{ wk.weight=wI.value.replace(",","."); save(); renderDelta(); };
+  waI.oninput=()=>{ wk.waist=waI.value.replace(",","."); save(); renderDelta(); };
+  nI.oninput=()=>{ wk.note=nI.value; save(); };
   renderDelta(); renderSpark(); renderTable();
+  const b=document.getElementById("baseRef");
+  b.textContent=(S.cfg.baseWeight||S.cfg.baseWaist)
+    ? "Blok öncesi referans: "+(S.cfg.baseWeight||"—")+" kg · "+(S.cfg.baseWaist||"—")+" cm" : "";
+}
+function prevMeasure(w,key){
+  for(let i=w-1;i>=1;i--) if(S.weeks[i]&&S.weeks[i][key]) return num(S.weeks[i][key]);
+  const base=key==="weight"?S.cfg.baseWeight:S.cfg.baseWaist;
+  return base?num(base):null;
 }
 function renderDelta(){
-  const el = document.getElementById("mDelta");
-  const prev = S.weeks[curWeek-1];
-  const cur = S.weeks[curWeek];
-  let parts = ["Hafta "+curWeek+" ölçümü"];
-  if(prev && prev.weight && cur.weight){
-    const dv = (num(cur.weight)-num(prev.weight)).toFixed(1);
-    parts.push("kilo <b class='"+(dv>0?"up":"")+"'>"+(dv>0?"+":"")+dv+" kg</b>");
-  }
-  if(prev && prev.waist && cur.waist){
-    const dv = (num(cur.waist)-num(prev.waist)).toFixed(1);
-    parts.push("bel <b class='"+(dv>0?"up":"")+"'>"+(dv>0?"+":"")+dv+" cm</b>");
-  }
-  el.innerHTML = parts.join(" · ") + (parts.length===1 ? " — önceki haftayla karşılaştırmak için iki hafta veri gerek." : "");
+  const el=document.getElementById("mDelta"), cur=S.weeks[curWeek];
+  const parts=["Hafta "+curWeek+" ölçümü"];
+  const pw=prevMeasure(curWeek,"weight"), pa=prevMeasure(curWeek,"waist");
+  if(pw!==null&&cur.weight){ const dv=(num(cur.weight)-pw).toFixed(1);
+    parts.push("kilo <b class='"+(dv>0?"warn":"")+"'>"+(dv>0?"+":"")+dv+" kg</b>"); }
+  if(pa!==null&&cur.waist){ const dv=(num(cur.waist)-pa).toFixed(1);
+    parts.push("bel <b class='"+(dv>0?"warn":"")+"'>"+(dv>0?"+":"")+dv+" cm</b>"); }
+  el.innerHTML=parts.join(" · ")+(parts.length===1?" — karşılaştırma için önceki ölçüm gerek.":"");
 }
 function renderSpark(){
-  const svg = document.getElementById("spark");
-  const pts = [];
-  for(let w=1;w<=WEEKS;w++) if(S.weeks[w].weight) pts.push({w, v:num(S.weeks[w].weight)});
-  if(pts.length<2){ svg.innerHTML = '<text x="8" y="52" fill="#8DA0B2" font-size="12">Kilo grafiği için en az 2 hafta verisi gerekiyor.</text>'; return; }
-  const min = Math.min(...pts.map(p=>p.v))-0.6, max = Math.max(...pts.map(p=>p.v))+0.6;
-  const X = w => 10 + (w-1)*(300/(WEEKS-1));
-  const Y = v => 82 - ((v-min)/(max-min||1))*66;
-  let path = pts.map((p,i)=>(i?"L":"M")+X(p.w).toFixed(1)+" "+Y(p.v).toFixed(1)).join(" ");
-  let dots = pts.map(p=>'<circle cx="'+X(p.w).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="3" fill="#E8B33A"/>').join("");
-  svg.innerHTML = '<path d="'+path+'" fill="none" stroke="#E8B33A" stroke-width="2" stroke-linejoin="round"/>'+dots+
+  const svg=document.getElementById("spark"), pts=[];
+  for(let w=1;w<=WEEKS;w++) if(S.weeks[w].weight) pts.push({w,v:num(S.weeks[w].weight)});
+  if(pts.length<2){ svg.innerHTML='<text x="8" y="52" fill="#8DA0B2" font-size="12">Kilo grafiği için en az 2 hafta verisi gerekiyor.</text>'; return; }
+  const min=Math.min.apply(null,pts.map(p=>p.v))-0.6, max=Math.max.apply(null,pts.map(p=>p.v))+0.6;
+  const X=w=>10+(w-1)*(300/(WEEKS-1)), Y=v=>82-((v-min)/(max-min||1))*66;
+  const path=pts.map((p,i)=>(i?"L":"M")+X(p.w).toFixed(1)+" "+Y(p.v).toFixed(1)).join(" ");
+  const dots=pts.map(p=>'<circle cx="'+X(p.w).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="3" fill="#E8B33A"/>').join("");
+  svg.innerHTML='<path d="'+path+'" fill="none" stroke="#E8B33A" stroke-width="2" stroke-linejoin="round"/>'+dots+
     '<text x="10" y="13" fill="#8DA0B2" font-size="11">'+max.toFixed(1)+' kg</text>'+
     '<text x="10" y="94" fill="#8DA0B2" font-size="11">'+min.toFixed(1)+' kg</text>';
 }
 function renderTable(){
-  const tb = document.getElementById("mTable");
-  tb.innerHTML = "";
-  for(let w=1; w<=WEEKS; w++){
-    const k = S.weeks[w], t = weekTonnage(w);
-    if(!k.weight && !k.waist && !t) continue;
-    const tr = document.createElement("tr");
-    tr.innerHTML = "<td>"+w+(w===curWeek?" ·":"")+"</td><td>"+(k.weight||"—")+"</td><td>"+(k.waist||"—")+"</td><td>"+(t?t.toLocaleString("tr-TR"):"—")+"</td>";
+  const tb=document.getElementById("mTable"); tb.innerHTML="";
+  for(let w=1;w<=WEEKS;w++){
+    const k=S.weeks[w], n=weekNutrition(w), t=weekTonnage(w);
+    if(!k.weight&&!k.waist&&!t&&!n.days) continue;
+    const tr=document.createElement("tr");
+    tr.innerHTML="<td>"+w+(w===DELOAD?" ▽":"")+(w===curWeek?" ·":"")+"</td><td>"+(k.weight||"—")+
+      "</td><td>"+(k.waist||"—")+"</td><td>"+(n.avgK||"—")+"</td><td>"+(n.avgP||"—")+"</td>";
     tb.appendChild(tr);
   }
-  if(!tb.children.length) tb.innerHTML = '<tr><td colspan="4" class="muted">Henüz ölçüm yok.</td></tr>';
+  if(!tb.children.length) tb.innerHTML='<tr><td colspan="5" class="muted">Henüz veri yok.</td></tr>';
 }
 
-/* ---------- RAPOR ---------- */
+/* ===== RAPOR ===== */
 function weekReport(w){
-  const L = [];
-  const wk = S.weeks[w], prev = S.weeks[w-1];
-  L.push("## Hafta "+w+" ("+fmt(S.sessions[w+"-1"].date)+" – "+fmt(S.sessions[w+"-4"].date)+")");
-  const done = [1,2,3,4].filter(d=>S.sessions[w+"-"+d].done).length;
-  const donePrev = w>1 ? [1,2,3,4].filter(d=>S.sessions[(w-1)+"-"+d].done).length : 0;
-  let tline = "Tamamlanan antrenman: "+done+"/4 · Haftalık tonaj: "+weekTonnage(w).toLocaleString("tr-TR")+" kg";
-  if(w>1 && done===4 && donePrev===4 && weekTonnage(w-1)){
-    tline += " (önceki hafta "+weekTonnage(w-1).toLocaleString("tr-TR")+" kg, %"+
-      (((weekTonnage(w)-weekTonnage(w-1))/weekTonnage(w-1))*100).toFixed(1)+")";
-  } else if(w>1 && weekTonnage(w-1)){
-    tline += " — hafta tamamlanmadığı için toplam tonaj önceki haftayla kıyaslanmadı, hareket bazlı karşılaştırmaya bak";
-  }
-  L.push(tline);
-  let body = "Kilo: "+(wk.weight||"—")+" kg · Bel: "+(wk.waist||"—")+" cm";
-  if(prev && prev.weight && wk.weight) body += " · kilo farkı "+((num(wk.weight)-num(prev.weight))>0?"+":"")+(num(wk.weight)-num(prev.weight)).toFixed(1)+" kg";
-  if(prev && prev.waist && wk.waist) body += " · bel farkı "+((num(wk.waist)-num(prev.waist))>0?"+":"")+(num(wk.waist)-num(prev.waist)).toFixed(1)+" cm";
+  const L=[], wk=S.weeks[w];
+  L.push("## Hafta "+w+" — "+PHASE[w]+" ("+fmt(S.sessions[w+"-1"].date)+" – "+fmt(S.sessions[w+"-4"].date)+")");
+  if(w===DELOAD) L.push("Deload haftası: set sayısı yarıya indirildi, RIR ~4 hedeflendi.");
+  const done=[1,2,3,4].filter(d=>S.sessions[w+"-"+d].done).length;
+  L.push("Devamlılık: "+done+"/4 antrenman · haftalık tonaj "+weekTonnage(w).toLocaleString("tr-TR")+" kg"+
+    (w>1&&weekTonnage(w-1)&&w!==DELOAD&&w-1!==DELOAD&&done===4
+      ? " (önceki hafta "+weekTonnage(w-1).toLocaleString("tr-TR")+" kg)" : ""));
+
+  let body="Kilo: "+(wk.weight||"—")+" kg · Bel: "+(wk.waist||"—")+" cm";
+  let dW=null;
+  const pw=prevMeasure(w,"weight"), pa=prevMeasure(w,"waist");
+  if(pw!==null&&wk.weight){ dW=num(wk.weight)-pw; body+=" · kilo farkı "+(dW>0?"+":"")+dW.toFixed(1)+" kg"; }
+  if(pa!==null&&wk.waist){ const d=num(wk.waist)-pa; body+=" · bel farkı "+(d>0?"+":"")+d.toFixed(1)+" cm"; }
   L.push(body);
+
+  const n=weekNutrition(w);
+  if(n.days){
+    L.push("Beslenme: "+n.days+"/7 gün kayıtlı · ortalama "+n.avgK+" kcal, protein "+n.avgP+" g, karb "+n.avgC+
+      " g, yağ "+n.avgF+" g · kalori hedefinde (±%10) "+n.hit+" gün · protein aralığında ("+S.cfg.protMin+"–"+S.cfg.protMax+" g) "+n.protHit+" gün");
+    if(dW!==null&&n.days>=4){
+      const maint=Math.round(n.avgK+(dW*7700/7));
+      L.push("Kaba enerji dengesi: ortalama "+n.avgK+" kcal ile haftalık "+(dW>0?"+":"")+dW.toFixed(1)+
+        " kg → tahmini idame ~"+maint+" kcal (tek hafta güvenilmez, 3 haftaya bak).");
+    }
+  } else L.push("Beslenme: bu hafta kayıt yok.");
+  if(n.avgSleep||n.avgEnergy)
+    L.push("Uyku/enerji: ortalama uyku "+(n.avgSleep||"—")+" sa · enerji "+(n.avgEnergy||"—")+"/5");
+  if(n.painDays.length) L.push("Bel ağrısı bildirilen günler: "+n.painDays.join(" · "));
+  else L.push("Bel ağrısı: bildirilmedi.");
+  if(n.csess){
+    L.push("Kardiyo: "+n.csess+" seans · "+Math.round(n.cmin)+" dk"+(n.ckm?" · "+n.ckm.toFixed(1)+" km":""));
+    n.cardioLines.forEach(l=>L.push("- "+l));
+  } else L.push("Kardiyo: bu hafta kayıt yok.");
+  const sb=sideBalance(w);
+  if(sb.length) L.push("Sol-sağ dengesi: "+sb.map(x=>x.name+" sol "+x.l+" / sağ "+x.r+" (fark "+(x.diff>0?"+":"")+x.diff+")").join(" · "));
   L.push("");
 
-  for(let d=1; d<=4; d++){
-    const sess = S.sessions[w+"-"+d], day = PROGRAM[d-1];
-    if(!hasData(sess)){ L.push("### Gün "+d+" — "+day.title+" ("+day.focus+") — yapılmadı"); L.push(""); continue; }
-    L.push("### Gün "+d+" — "+day.title+" ("+day.focus+") · "+fmt(sess.date,true)+" · "+tonnage(sess).toLocaleString("tr-TR")+" kg");
+  for(let d=1;d<=4;d++){
+    const sess=S.sessions[w+"-"+d], day=PROGRAM[d-1];
+    if(!hasData(sess)){ L.push("### "+day.title+" — "+day.focus+" — yapılmadı"); L.push(""); continue; }
+    L.push("### "+day.title+" — "+day.focus+" · "+fmt(sess.date,true)+" · "+tonnage(sess).toLocaleString("tr-TR")+" kg");
     day.ex.forEach(def=>{
-      const e = sess.ex[def.k];
-      if(!e) return;
-      const done = e.sets.map(setStr).filter(Boolean);
-      if(!done.length) return;
-      let best = 0, bs = null;
-      e.sets.forEach(s=>{ const v = e1rm(num(s.kg),num(s.reps)); if(v>best){best=v;bs=s;} });
-      let line = "- "+exName(def,e)+" (hedef "+def.s+"×"+def.r+"): "+done.join(", ");
-      if(best) line += " | tahmini 1RM ~"+best+" kg";
-      if(e.note) line += " | not: "+e.note;
-      const lp = lastPerf(def.k, w, d);
-      if(lp){
-        let pb=0; lp.e.sets.forEach(s=>{ const v=e1rm(num(s.kg),num(s.reps)); if(v>pb) pb=v; });
-        if(pb && best) line += " | önceki 1RM ~"+pb+" kg ("+(best-pb>=0?"+":"")+(best-pb)+")";
-      }
+      const e=sess.ex[def.k]; if(!e) return;
+      const dn=e.sets.map(s=>setStr(s,def.uni)).filter(Boolean); if(!dn.length) return;
+      let best=0; e.sets.forEach(s=>{ const v=e1rm(num(s.kg),num(s.reps)); if(v>best) best=v; });
+      let line="- "+exName(def,e)+" (hedef "+setsFor(def,w)+"×"+def.r+", RIR "+(w===DELOAD?"4":def.rir)+")"+
+        (def.u==="el"?" [kg/el]":"")+": "+dn.join(", ");
+      if(best&&def.u!=="sn"&&def.u!=="bw") line+=" | tahmini 1RM ~"+best+" kg";
+      if(e.note) line+=" | not: "+e.note;
+      const lp=lastPerf(def.k,w,d);
+      if(lp){ let pb=0; lp.e.sets.forEach(s=>{ const v=e1rm(num(s.kg),num(s.reps)); if(v>pb) pb=v; });
+        if(pb&&best) line+=" | önceki 1RM ~"+pb+" kg ("+(best-pb>=0?"+":"")+(best-pb)+")"; }
+      if(shouldProgress(def,e)&&w!==DELOAD) line+=" | üst sınır tamam, ağırlık artışı sırada";
       L.push(line);
     });
     if(sess.note) L.push("- Seans notu: "+sess.note);
     L.push("");
   }
+
+  const start=addDays(startD(),(w-1)*7), dayLines=[];
+  for(let i=0;i<7;i++){
+    const ds=addDays(start,i), d=S.days[ds]; if(!d) continue;
+    const t=dayTotals(ds);
+    if(!t.kcal&&!(d.cardio||[]).length&&!d.note&&!d.sleep) continue;
+    const meals=(d.meals||[]).filter(m=>m.n||m.kcal).map(m=>(m.n||"isimsiz")+" ("+(m.kcal||"?")+" kcal, P"+(m.p||"?")+")");
+    dayLines.push("- "+fmt(ds,true)+(sessionOn(ds)?" [antrenman]":"")+": "+Math.round(t.kcal)+" kcal / P "+Math.round(t.p)+" g"+
+      (d.sleep?" · uyku "+d.sleep+" sa":"")+(d.energy?" · enerji "+d.energy+"/5":"")+
+      (d.pain&&d.pain!=="yok"?" · bel "+d.pain:"")+
+      " — "+(meals.length?meals.join("; "):"öğün yazılmamış")+(d.note?" | not: "+d.note:""));
+  }
+  if(dayLines.length){ L.push("### Günlük döküm"); L.push.apply(L,dayLines); L.push(""); }
   if(wk.note){ L.push("**Haftalık değerlendirme:** "+wk.note); L.push(""); }
   return L.join("\n");
 }
 function fullReport(){
-  const head = ["# Antrenman raporu — "+(scopeAll? "8 haftalık blok" : "Hafta "+curWeek),
-    "Program: 4 gün/hafta (Üst-Güç, Alt-Güç, Üst-Hipertrofi, Alt-Hipertrofi). Blok başlangıcı "+fmt(S.start)+".",
-    "Format: ağırlık×tekrar @RIR. RIR = sette bıraktığım tekrar sayısı.",""];
-  const body = scopeAll ? Array.from({length:WEEKS},(_,i)=>i+1).filter(w=>weekTonnage(w)>0||S.weeks[w].weight).map(weekReport)
-                        : [weekReport(curWeek)];
-  const tail = ["---","**Koçtan istediğim:** önümüzdeki hafta için ağırlık/tekrar ayarı, hacim dengesi ve zayıf kalan bölge üzerine öneri."];
-  return head.concat(body, tail).join("\n");
+  const head=["# Recomp 2.0 raporu — "+(scopeAll?"8 haftalık blok":"Hafta "+curWeek),
+    "Blok: 4 gün/hafta (Upper A güç, Lower A güç/kontrollü, Upper B hipertrofi, Lower B hipertrofi). 1. hafta başlangıcı "+fmt(startD())+". 4. hafta deload.",
+    "Öncelik: sırt ve omuz gelişimi, yağ kaybederken kası korumak, bacak kuvveti, göğüs ve kolu korumak.",
+    "Hedefler: antrenman günü "+S.cfg.kcalT+" kcal, dinlenme günü "+S.cfg.kcalR+" kcal, protein "+S.cfg.protMin+"–"+S.cfg.protMax+" g.",
+    "Format: ağırlık×tekrar @RIR. Tek taraflı hareketlerde tekrar sol/sağ yazılır. Dambıl hareketlerinde ağırlık tek dambıl başına (kg/el).",""];
+  const body=scopeAll
+    ? Array.from({length:WEEKS},(_,i)=>i+1).filter(w=>weekTonnage(w)>0||S.weeks[w].weight||weekNutrition(w).days).map(weekReport)
+    : [weekReport(curWeek)];
+  const tail=["---","**Koçtan istediğim:** gelecek hafta ağırlık/tekrar ayarı, sırt-omuz hacim dengesi, kalori ve protein ayarı, kardiyo dozu, sol-sağ farkı için öneri."];
+  return head.concat(body,tail).join("\n");
+}
+function maintEstimate(){
+  const rows=[];
+  for(let w=1;w<=WEEKS;w++){
+    const n=weekNutrition(w), wk=S.weeks[w], pw=prevMeasure(w,"weight");
+    if(n.days>=4&&wk.weight&&pw!==null) rows.push(n.avgK+((num(wk.weight)-pw)*7700/7));
+  }
+  if(rows.length<2) return null;
+  const last=rows.slice(-3);
+  return Math.round(last.reduce((a,b)=>a+b,0)/last.length);
 }
 function renderRapor(){
-  document.getElementById("repMeta").textContent = scopeAll ? "tüm blok" : "hafta "+curWeek;
-  document.getElementById("btnScope").textContent = scopeAll ? "Sadece bu hafta" : "Tüm blok";
-  document.getElementById("repOut").textContent = fullReport();
+  document.getElementById("repMeta").textContent=scopeAll?"tüm blok":"hafta "+curWeek;
+  document.getElementById("btnScope").textContent=scopeAll?"Sadece bu hafta":"Tüm blok";
+  document.getElementById("repOut").textContent=fullReport();
+  const c=S.cfg;
+  const map={cStart:"start",cKcalT:"kcalT",cKcalR:"kcalR",cProtMin:"protMin",cProtMax:"protMax",cKey:"key",cModel:"model"};
+  for(const id in map){
+    const el=document.getElementById(id);
+    if(document.activeElement!==el) el.value=c[map[id]];
+    el.oninput=()=>{
+      c[map[id]]=el.value.trim(); save();
+      if(id==="cStart"&&el.value){ reDate(); renderBlok(); }
+      refreshTotals();
+    };
+  }
+  const m=maintEstimate();
+  document.getElementById("maintHint").textContent = m
+    ? "Veriden tahmini idame ~"+m+" kcal. Koçun 200–300 kcal açığı için günlük hedef ~"+(m-250)+" kcal."
+    : "Tahmini idame için en az 2 haftalık kilo + beslenme kaydı gerekiyor.";
+}
+function reDate(){
+  for(let w=1;w<=WEEKS;w++) for(let d=1;d<=4;d++){
+    const s=S.sessions[w+"-"+d];
+    if(!s.done&&!hasData(s)) s.date=plannedDate(w,d);
+  }
+  curDay=clampDay(iso(new Date())); save();
+}
+async function runAI(){
+  const c=S.cfg;
+  if(!c.key){ toast("Önce ayarlardan API anahtarını gir"); return; }
+  const out=document.getElementById("aiOut");
+  out.style.display="block"; out.textContent="Analiz isteniyor...";
+  const prompt=
+    "Aşağıda kendi antrenman, beslenme ve kardiyo kaydım var. Recomp bloğundayım; öncelik sırt ve omuz gelişimi, "+
+    "yağ kaybederken kası korumak. Geçmişte squat, RDL, leg press ve leg raise'de bel rahatsızlığı yaşadım.\n"+
+    "Deneyimli bir güç/hipertrofi koçu gibi, kısa ve sayısal değerlendir:\n"+
+    "1) Geçen haftaya göre ne iyi gitti, ne kötü.\n2) Gelecek hafta her hareket için somut ağırlık/tekrar önerisi.\n"+
+    "3) Kalori ve protein ayarı gerekiyor mu, neden.\n4) Kardiyo dozu ve zamanlaması.\n"+
+    "5) Sol-sağ farkı ve bel için dikkat edilecekler.\n6) Riskli gördüğün tek şey.\n"+
+    "Tıbbi teşhis koyma; bacağa yayılan ağrı, uyuşma veya güç kaybı varsa doktora yönlendir.\n\n"+fullReport();
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"content-type":"application/json","x-api-key":c.key,
+        "anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:c.model||"claude-sonnet-5-5",max_tokens:1800,messages:[{role:"user",content:prompt}]})
+    });
+    const data=await res.json();
+    if(data.error){ out.textContent="Hata: "+(data.error.message||JSON.stringify(data.error)); return; }
+    out.textContent=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n")||"Boş yanıt.";
+  }catch(e){ out.textContent="İstek başarısız: "+e.message+"\nAnahtarı ve bağlantıyı kontrol et."; }
 }
 
-/* ---------- OLAYLAR ---------- */
+/* ===== OLAYLAR ===== */
 document.querySelectorAll("nav.tabs button").forEach(b=>{
-  b.onclick = ()=>{
-    tab = b.dataset.tab;
-    document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.toggle("on", x===b));
-    document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on", s.id==="scr-"+tab));
+  b.onclick=()=>{
+    tab=b.dataset.tab;
+    document.querySelectorAll("nav.tabs button").forEach(x=>x.classList.toggle("on",x===b));
+    document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id==="scr-"+tab));
+    if(tab==="gun") renderGun();
     if(tab==="olcum") renderOlcum();
     if(tab==="rapor") renderRapor();
     window.scrollTo(0,0);
   };
 });
-document.getElementById("btnBack").onclick = closeSession;
-document.getElementById("btnFinish").onclick = ()=>{
-  const sess = S.sessions[curKey];
-  sess.done = !sess.done; save();
+document.getElementById("dPrev").onclick=()=>{ curDay=clampDay(addDays(curDay,-1)); renderGun(); };
+document.getElementById("dNext").onclick=()=>{ curDay=clampDay(addDays(curDay,1)); renderGun(); };
+document.getElementById("btnMenu").onclick=openMenu;
+document.getElementById("btnAddCardio").onclick=()=>{ getDay(curDay).cardio.push({t:"out",dur:"",dist:"",note:""}); save(); renderGun(); };
+document.getElementById("btnBack2").onclick=()=>document.getElementById("sheet2").classList.remove("on");
+document.getElementById("btnBack").onclick=closeSession;
+document.getElementById("btnFinish").onclick=()=>{
+  const sess=S.sessions[curKey]; sess.done=!sess.done; save();
   if(sess.done){ toast("Antrenman tamamlandı"); closeSession(); }
-  else { document.getElementById("btnFinish").textContent = "Antrenmanı tamamla"; }
+  else document.getElementById("btnFinish").textContent="Antrenmanı tamamla";
 };
-document.getElementById("btnCopyPrev").onclick = ()=>{
-  const [w,d] = curKey.split("-").map(Number);
-  const sess = S.sessions[curKey];
-  let n = 0;
+document.getElementById("btnCopyPrev").onclick=()=>{
+  const p=curKey.split("-"), w=+p[0], d=+p[1], sess=S.sessions[curKey];
+  let n=0;
   PROGRAM[d-1].ex.forEach(def=>{
-    const lp = lastPerf(def.k, w, d);
-    if(!lp) return;
-    const e = sess.ex[def.k] || (sess.ex[def.k] = blankEx(def));
+    const lp=lastPerf(def.k,w,d); if(!lp) return;
+    const e=sess.ex[def.k]||(sess.ex[def.k]=blankEx(def,w));
     if(e.sets.some(s=>s.kg!==""||s.reps!=="")) return;
-    e.sets = lp.e.sets.map(s=>({kg:s.kg, reps:s.reps, rir:""}));
-    if(!e.alt && lp.e.alt) e.alt = lp.e.alt;
+    const target=setsFor(def,w);
+    e.sets=lp.e.sets.slice(0,Math.max(target,1)).map(s=>({kg:s.kg,reps:s.reps,repsR:s.repsR||"",rir:""}));
+    while(e.sets.length<target) e.sets.push(blankSet());
+    if(!e.alt&&lp.e.alt) e.alt=lp.e.alt;
     n++;
   });
   save(); renderExercises();
-  toast(n? n+" hareket dolduruldu" : "Doldurulacak boş hareket yok");
+  toast(n?n+" hareket dolduruldu":"Doldurulacak boş hareket yok");
 };
-document.getElementById("btnScope").onclick = ()=>{ scopeAll = !scopeAll; renderRapor(); };
-document.getElementById("btnCopy").onclick = async ()=>{
-  const txt = fullReport();
+document.getElementById("btnScope").onclick=()=>{ scopeAll=!scopeAll; renderRapor(); };
+document.getElementById("btnAI").onclick=runAI;
+document.getElementById("btnCopy").onclick=async ()=>{
+  const txt=fullReport();
   try{ await navigator.clipboard.writeText(txt); toast("Rapor kopyalandı"); }
   catch(e){
-    const ta = document.createElement("textarea");
-    ta.value = txt; document.body.appendChild(ta); ta.select();
-    try{ document.execCommand("copy"); toast("Rapor kopyalandı"); }
-    catch(_){ toast("Kopyalanamadı, metni elle seç"); }
+    const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select();
+    try{ document.execCommand("copy"); toast("Rapor kopyalandı"); }catch(_){ toast("Kopyalanamadı, metni elle seç"); }
     ta.remove();
   }
 };
-document.getElementById("btnExport").onclick = ()=>{
-  const blob = new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "blok8w-"+iso(new Date())+".json";
-  a.click(); URL.revokeObjectURL(a.href);
+function download(obj,name){
+  const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download=name; a.click(); URL.revokeObjectURL(a.href);
+}
+document.getElementById("btnExport").onclick=()=>{
+  const copy=JSON.parse(JSON.stringify(S)); if(copy.cfg) copy.cfg.key="";
+  download(copy,"recomp2-"+iso(new Date())+".json");
 };
-document.getElementById("btnImport").onclick = ()=>document.getElementById("fileIn").click();
-document.getElementById("fileIn").onchange = ev=>{
-  const f = ev.target.files[0]; if(!f) return;
-  const r = new FileReader();
-  r.onload = ()=>{
+document.getElementById("btnOld").onclick=()=>{
+  const raw=localStorage.getItem(OLDKEY);
+  if(!raw){ toast("Önceki blok verisi bulunamadı"); return; }
+  try{ download(JSON.parse(raw),"onceki-blok-"+iso(new Date())+".json"); }
+  catch(e){ toast("Önceki veri okunamadı"); }
+};
+document.getElementById("btnImport").onclick=()=>document.getElementById("fileIn").click();
+document.getElementById("fileIn").onchange=ev=>{
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
     try{
-      const d = JSON.parse(r.result);
-      if(!d.sessions || !d.weeks) throw new Error("format");
-      S = d; save(); renderBlok(); renderOlcum(); renderRapor();
-      toast("Yedek yüklendi");
+      const d=JSON.parse(r.result);
+      if(!d.sessions||!d.weeks) throw new Error("format");
+      const oldKey=(S.cfg&&S.cfg.key)||"";
+      S=d; S.cfg=Object.assign({},DEF_CFG,S.cfg||{}); if(!S.cfg.key) S.cfg.key=oldKey;
+      if(!S.days) S.days={};
+      save(); curDay=clampDay(iso(new Date()));
+      renderBlok(); renderGun(); renderOlcum(); renderRapor(); toast("Yedek yüklendi");
     }catch(e){ toast("Dosya okunamadı"); }
   };
   r.readAsText(f);
 };
 
-/* ---------- BAŞLAT ---------- */
+/* ===== BAŞLAT ===== */
 load();
-const nx0 = nextSession();
-curWeek = nx0 ? nx0.w : WEEKS;
+const nx0=nextSession();
+curWeek=nx0?nx0.w:WEEKS;
+curDay=clampDay(iso(new Date()));
 renderBlok(); renderOlcum(); renderRapor();
-
-if("serviceWorker" in navigator && location.protocol === "https:"){
+if("serviceWorker" in navigator && location.protocol==="https:"){
   navigator.serviceWorker.register("sw.js").catch(()=>{});
 }
 </script>
